@@ -13,13 +13,6 @@ const Router = ({ children }) => {
   return <div>{children({ path })}</div>;
 };
 
-//Links
-//const Link = ({ to, children }) => (
-//  <a href={to} className="text-blue-500 hover:underline">
-//    {children}
-//  </a>
-//);
-
 // Context for shared state
 const PropsContext = createContext();
 
@@ -35,25 +28,6 @@ const propsReducer = (state, action) => {
   }
 };
 
-// Subjects
-
-const Users = [
-  {
-    "id": '',
-    "name": "RmBrown",
-    "store_location": "Eureka Springs",
-    "games": [],
-    "high_score": 0,
-    "current_score": 0
-  },
-  {
-    "name": "Frida Khalo",
-    "store_location": "Mexico City",
-    "games": [],
-    "high_score": 0
-  },
-]
-
 const gameInitialState  = {
   id: 0, 
   state: ['InitialSettings', 'PlayGame', 'WrapUp'], 
@@ -68,7 +42,6 @@ const gameInitialState  = {
 // Props provider
 const PropsProvider = ({ children }) => {
   const [props, dispatch] = useReducer(propsReducer, gameInitialState);
-
   const [channel] = useState(() => new BroadcastChannel('props-sync'));
 
   useEffect(() => {
@@ -102,7 +75,7 @@ const PropsProvider = ({ children }) => {
 const useProps = () => {
   const context = useContext(PropsContext);
   if (!context) {
-    throw new Error('useProps must be used within PropsProvider');
+    throw new Error('useProps is not in PropsProvider');
   }
   return context;
 };
@@ -114,19 +87,30 @@ const Admin = () => {
    
     const name = e.target.name.value
     const st = e.target.store_location.value
+    
     console.log(e.target.name.value)
     console.log(e.target.store_location.value)
 
-    localStorage.setItem(name, JSON.stringify({ "name": name, "store_location": st }))
-
-     // props.setPlayer(prev => prev.concat({name, species, age, id: Date.now()}))
-     // setName("")
-     // setSpecies("")
-     // setAge("")
+    // Creates Player by adding to localStorage
+    // JSON.parse
+    const constructPlayer = () => {
+      const player = {
+        "id": Date.now(),
+        "name": name,
+        "store_location": st,
+        "games": [],
+        "high_score": 0,
+        "current_score": 0
+      }
+      return player
     }
+    localStorage.setItem(name, JSON.stringify(constructPlayer()))
+     // props.setPlayer(prev => prev.concat({name, species, age, id: Date.now()}))
+  }
+
   const CreatePlayer = () => {
     const [name, setName] = useState('')
-    const [store_location, setStoreLocation] = useState('Eureka Springs')
+    const [store_location, setStoreLocation] = useState('')
     
     const logValue = (value) => {
       console.log('value: ', value)
@@ -139,19 +123,23 @@ const Admin = () => {
           <fieldset>
             <legend>Add New Player</legend>
             <label className="pr-4">Name</label>
-            <input className="bg-green-900 px-5 m-3" 
+            <input className="bg-gray-400 px-5 m-3" 
               value={name} 
               name="name" 
               onChange={e => setName(e.target.value)} 
-              placeholder="Name" />
+              placeholder="enter name" />
             <label className="pr-4">Store Location</label>
-            <input className="bg-green-900 px-5 m-3 text-" value={store_location} name="store_location" onChange={e => setStoreLocation(e.target.value)} placeholder="Store Location" />
+            <input className="bg-gray-400 px-5 m-3 text-" 
+              value={store_location} 
+              name="store_location" 
+              onChange={e => setStoreLocation(e.target.value)} 
+              placeholder="enter location" />
             <button>Add Player</button>
           </fieldset>
         </form>
       </div>
         <div>
-          <p>{localStorage.length}</p> 
+          <p>Number of players stored in localStorage: {localStorage.length}</p> 
         </div>
     </div>
     )
@@ -160,12 +148,15 @@ const Admin = () => {
   console.log(props)
   return (
       <>    
-        <h1>Admin</h1>
-        <p>{`${props.playing}`}</p>
-        <div className="p-4 m-4 bg-indigo-400">
-          <button onClick={() => handleInputChange('playing', !props.playing)}>{props.playing ? 'Stop Game' : 'Start Game'}</button>
+        <h1>Admin Page</h1>
+        <div className="p-4 m-4 bg-indigo-600">
+          <p>Game in session :</p>
+          <p className={props.playing? 'text-green-400 font-bold': 'text-red-500 font-bold'}> {`${props.playing}`}</p>
+          <br/>
+          <button onClick={() => handleInputChange('playing', !props.playing)}>
+            {props.playing ? 'Stop Game' : 'Start Game'}
+          </button>
         </div>
-
         <CreatePlayer />
     </>
   )
@@ -179,24 +170,27 @@ const Display = () => {
   }
 
   const Game = () => {
-    const [msg, setMsg] = useState('Ready')
+    const [msg, setMsg] = useState('')
     const [addPoints, setAddPoints] = useState(0)
+
     useEffect(() => {
-      const command_one = setInterval(() => {
+      const command_one = setTimeout(() => {
         setMsg('Set')
       }, 1000)
-      const command_two = setInterval(() => {
+      
+      // Send command to LEDS to turn green and stay on
+      
+      return
+    },[])
+
+    useEffect(() => {
+      const command_two = setTimeout(() => {
         setMsg('HiiiKe!')
       }, 2354)
 
-
       // Send command to LEDS to turn green and stay on
       
-      return () => {
-        console.log('intervals cleared')
-        clearInterval(command_one)
-        clearInterval(command_two)
-      }
+      return
     },[])
 
     return (
@@ -220,9 +214,7 @@ export default function App() {
       <Router>
         {({ path }) => (
           <div>
-            <nav className="">
-            </nav>
-            <div className="">
+            <div className="p-4 m-4">
               {path === '#/display' && <Display />}
               {(path === '#/admin' || path === '#/') && <Admin />}
             </div>
@@ -235,12 +227,3 @@ export default function App() {
     </PropsProvider>
   );
 }
-
-//        <h1>Game On: <span>{`${props.playing}`}</span></h1>
-//        <p>{props.id}</p>
-//        <p>{props.state}</p>
-//        <p>{props.score}</p>
-//        <p>{props.thorws}</p>
-//        <p>{props.dateTime}</p>
-//        <p>{props.duration}</p>
-//        <p>{props.player}</p>
