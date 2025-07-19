@@ -13,7 +13,6 @@ const Router = ({ children }) => {
   return <div>{children({ path })}</div>;
 };
 
-
 //Links
 //const Link = ({ to, children }) => (
 //  <a href={to} className="text-blue-500 hover:underline">
@@ -23,7 +22,6 @@ const Router = ({ children }) => {
 
 // Context for shared state
 const PropsContext = createContext();
-
 
 // Reducer
 const propsReducer = (state, action) => {
@@ -41,10 +39,12 @@ const propsReducer = (state, action) => {
 
 const Users = [
   {
+    "id": '',
     "name": "RmBrown",
     "store_location": "Eureka Springs",
     "games": [],
-    "high_score": 0
+    "high_score": 0,
+    "current_score": 0
   },
   {
     "name": "Frida Khalo",
@@ -109,9 +109,52 @@ const useProps = () => {
 
 const Admin = () => {
   const { props, handleInputChange } = useProps()
+  function handleSubmit(e) {
+    e.preventDefault()
+   
+    const name = e.target.name.value
+    const st = e.target.store_location.value
+    console.log(e.target.name.value)
+    console.log(e.target.store_location.value)
 
+    localStorage.setItem(name, JSON.stringify({ "name": name, "store_location": st }))
+
+     // props.setPlayer(prev => prev.concat({name, species, age, id: Date.now()}))
+     // setName("")
+     // setSpecies("")
+     // setAge("")
+    }
   const CreatePlayer = () => {
+    const [name, setName] = useState('')
+    const [store_location, setStoreLocation] = useState('Eureka Springs')
+    
+    const logValue = (value) => {
+      console.log('value: ', value)
+    }
 
+    return (
+      <div className="bg-blue-300 p-5 m-4 inline-block">        
+        <div>        
+          <form onSubmit={handleSubmit}>
+          <fieldset>
+            <legend>Add New Player</legend>
+            <label className="pr-4">Name</label>
+            <input className="bg-green-900 px-5 m-3" 
+              value={name} 
+              name="name" 
+              onChange={e => setName(e.target.value)} 
+              placeholder="Name" />
+            <label className="pr-4">Store Location</label>
+            <input className="bg-green-900 px-5 m-3 text-" value={store_location} name="store_location" onChange={e => setStoreLocation(e.target.value)} placeholder="Store Location" />
+            <button>Add Player</button>
+          </fieldset>
+        </form>
+      </div>
+        <div>
+          <p>{localStorage.length}</p> 
+        </div>
+    </div>
+    )
   }
 
   console.log(props)
@@ -120,7 +163,7 @@ const Admin = () => {
         <h1>Admin</h1>
         <p>{`${props.playing}`}</p>
         <div className="p-4 m-4 bg-indigo-400">
-          <button onClick={() => handleInputChange('playing', !props.playing)}>GameControl</button>
+          <button onClick={() => handleInputChange('playing', !props.playing)}>{props.playing ? 'Stop Game' : 'Start Game'}</button>
         </div>
 
         <CreatePlayer />
