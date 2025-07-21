@@ -129,24 +129,26 @@ const Admin = () => {
     const [store_location, setStoreLocation] = useState('')
     
     return (
-      <div className="bg-blue-300 p-5 m-4 inline-block">        
+      <div className="bg-blue-300 p-5 inline-block">        
         <div>        
           <form onSubmit={handleSubmitCreate}>
           <fieldset>
-            <legend>Add New Player</legend>
+            <legend className="p-2 font-bold rounded-lg">Add New Player</legend>
             <label className="pr-4">Name</label>
-            <input className="bg-gray-400 px-5 m-3" 
+            <input className="bg-gray-200 px-5 m-3" 
               value={name} 
               name="name" 
               onChange={e => setName(e.target.value)} 
               placeholder="enter name" />
+		  <br/>
             <label className="pr-4">Store Location</label>
-            <input className="bg-gray-400 px-5 m-3 text-" 
+            <input className="bg-gray-200 px-5 m-3" 
               value={store_location} 
               name="store_location" 
               onChange={e => setStoreLocation(e.target.value)} 
               placeholder="enter location" />
-            <button>Add Player</button>
+		  <br/>
+            <button className="hover:bg-gray-200">Add Player</button>
           </fieldset>
         </form>
       </div>
@@ -179,10 +181,9 @@ const Admin = () => {
 	 <>
 	 <h1>Admin Page</h1>
 	 <div className="inline-block bg-orange-400 rounded-lg">
-	   <p>Game in session :</p>
         <p 
-	   className={props.playing? 'text-green-400 font-bold text-lg': 'text-red-500 font-bold text-lg'}>
-	   {`${props.playing}`}</p>
+	   className={props.playing? 'text-green-400 font-bold text-xlg': 'text-red-500 font-bold text-lg'}>
+	   {`${props.playing}` ? 'Game On' : 'Timout'}</p>
           <br/>
 	   <Serial />
 	 <br />
@@ -281,7 +282,7 @@ const Display = () => {
 
   return (
     <>
-      <div>{props.playing ? (<Game/>): (<LeaderBoard />)}</div>
+      <div>{props.playing ? (<Game />): (<LeaderBoard />)}</div>
     </>
   )
 }
