@@ -77,7 +77,7 @@ const PropsProvider = ({ children }) => {
 export const useProps = () => {
   const context = useContext(PropsContext);
   if (!context) {
-    throw new Error('useProps is not in PropsProvider');
+    throw new Error('error: useProps is not in PropsProvider');
   }
   return context;
 };
