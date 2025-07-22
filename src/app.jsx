@@ -131,6 +131,7 @@ const Admin = () => {
 
     const curr_player = localStorage.getItem('current_player')
     console.log('Current QB is: ', curr_player)
+
     const player_set = localStorage.getItem(curr_player)
     console.log('QB info pack: ', player_set)
 
@@ -141,9 +142,8 @@ const Admin = () => {
     const jfy = JSON.parse(u)
     console.log(jfy.current_score)
     jfy.current_score = parseInt(localStorage.getItem('score'))
-    console.log(jfy)
+    console.log(jfy.current_score)
     const setnewplayer = localStorage.setItem(e.target.test_name.value, JSON.stringify(jfy))
-    handleInputChange('player', 'None')
   }
 
   // Handle Select Existing Player to Play
@@ -333,17 +333,16 @@ const Display = () => {
     const [msg, setMsg] = useState('Ready')
     const [addPoints, setAddPoints] = useState(0)
     const [player, setPlayer] = useState('')
-
-      const playerlist = () => {
-        const array = []
-	   for (let i = 0; i < localStorage.length; i++) {
-			 const key = localStorage.key(i)
-			 const value = localStorage.getItem(key)
-			 //array.push(JSON.parse(value))
-			 array.push(value)
-		  }
-        return array
+    
+    const playerlist = () => {
+      const array = []
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i)
+	   const value = localStorage.getItem(key)
+	   array.push(value)
       }
+        return array
+    }
 
     useEffect(() => {
       const pl = playerlist()
@@ -371,9 +370,16 @@ const Display = () => {
       return 
     },[])
 
+    const Curtain = () => {
+        if (msg === '') {
+		  return <div className="">{msg}</div>
+	   }
+	   return <div className="block w-200 h-100 text-center fixed top-70 right-70 left-70 text-6xl bg-indigo-400">{msg}</div>
+    }
+
     return (
       <>
-        <div className="fixed top-100 right-100 left-100 text-4xl bg-indigo-200">{msg}</div>
+	   <Curtain />
 	   <br />
 	   <p>Is player set? {`${props.playing}`}</p>
 	   <p>Which player is playing? {props.player}</p>
@@ -384,11 +390,7 @@ const Display = () => {
     )
   }
 
-  return (
-    <>
-      <div>{props.playing ? (<Game />): (<LeaderBoard />)}</div>
-    </>
-  )
+  return <div>{props.playing ? (<Game />): (<LeaderBoard />)}</div>
 }
 
 // Main App component

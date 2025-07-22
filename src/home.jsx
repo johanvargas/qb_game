@@ -1,9 +1,7 @@
 import { useProps } from './app.jsx'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-
-// TODO:	  Pull games from localStorage order by score filter top 5
-//		  show rank, name, store
+// TODO: show rank, name, store
 
 const mockPlayers = [
     {
@@ -41,11 +39,10 @@ const mockPlayers = [
 const realPlayers = () => {
     const sendArray = []
 
-    for (let i; i <= localStorage.length; i++) {
+    for (let i = 0; i < localStorage.length; i++) {
 	   const key = localStorage.key(i)
 	   const value = localStorage.getItem(key)
-	   console.log('Shake it, Break it, hang it on the wall, ', JSON.parse(value))
-	   sendArray.concat(value)
+	   sendArray.push(value)
     }
 
     return sendArray
@@ -53,6 +50,13 @@ const realPlayers = () => {
 
 export default function Home(props) {
     const [ranked, setRanked] = useState(mockPlayers)
+
+    useEffect(() => {
+	   const realPlayerList = realPlayers()
+	   console.log(realPlayerList)
+	   //setRanked(realPlayerList)
+    },[])
+
     const Rank = (props) => {
 	   return (
 			 <tr className="">
