@@ -1,7 +1,6 @@
 import React, { useReducer, useEffect, useState, createContext, useContext } from 'react'
 import { io } from "socket.io-client"
 import Home from './Home'
-//import Serial from './Serial'
 
 // Router
 const Router = ({ children }) => {
@@ -86,7 +85,6 @@ export const useProps = () => {
 const Admin = () => {
   const { props, handleInputChange } = useProps()
   const { keepscore, setKeepScore } = useState(localStorage.getItem('score'))
-
   
   // Handle Create Player
   function handleSubmitCreate(e) {
@@ -106,9 +104,7 @@ const Admin = () => {
       }
       return player
     }
-
     localStorage.setItem(name, JSON.stringify(constructPlayer()))
-
     handleInputChange('player', name)
     // props.setPlayer(prev => prev.concat({name, species, age, id: Date.now()}))
     //handleInputChange('player_set', props.player_set)
@@ -127,16 +123,11 @@ const Admin = () => {
   // Handle Stop Game
   function handleSubmitStop(e) {
     e.preventDefault()
-    console.log('GAME STOPPED')
-
     const curr_player = localStorage.getItem('current_player')
     console.log('Current QB is: ', curr_player)
-
     const player_set = localStorage.getItem(curr_player)
     console.log('QB info pack: ', player_set)
-
     console.log ('user found: ', e.target.test_name.value)
-
     const u = localStorage.getItem(e.target.test_name.value)
     console.log('in ls: ', u)
     const jfy = JSON.parse(u)
@@ -151,8 +142,8 @@ const Admin = () => {
     e.preventDefault()
     localStorage.setItem('current_player', e.target.curr_name.value)
     handleInputChange('player', e.target.curr_name.value)
-
   }
+
   const CreatePlayer = () => {
     const [name, setName] = useState('')
     const [store_location, setStoreLocation] = useState('')
@@ -208,18 +199,31 @@ const Admin = () => {
   }
 
   const PlayerList = () => {
-	 const array = []
-	   for (let i = 0; i < localStorage.length; i++) {
-			 const key = localStorage.key(i)
-			 const value = localStorage.getItem(key)
-			 //array.push(JSON.parse(value))
-			 array.push(value)
-	   }
-        return (
-		  <ul>
-		  {array.map((p, index) => (<li className="bg-white m-1"key={index}>{p}</li>))}
-		  </ul>
-	   )
+
+    const array = []
+    for (let i = 0; i < localStorage.length; i++) {
+	 const key = localStorage.key(i)
+	 const value = localStorage.getItem(key)
+	 //array.push(JSON.parse(value))
+	 
+	 if ( value[0] != '{') {
+	   console.log('win')
+	   continue
+	 }
+	 array.push(value)
+    }
+
+    const { plist, setPlist } = useState(array)
+    //console.log('array values: ', JSON.parse(array[0]).store_location)
+    console.log('array values: ', plist)
+    //{array.map((p, index) => (<li className="bg-white m-1"key={index}>{JSON.parse(p)}</li>))}
+    //return <p>{JSON.parse(array[0]).store_location}</p>
+    
+    return (
+    <div className="bg-blue-400 p-2 m-2 rounded-lg">
+	 {array.map(item => <p>{JSON.parse(item).name} {JSON.parse(item).store_location} {JSON.parse(item).current_score}</p>)}
+    </div>
+    )
   }
 
   return (
@@ -248,7 +252,7 @@ const Admin = () => {
 	 <div className="inline-block">
 	 <form onSubmit={handleSubmitStop}>
 	   <fieldset>
-	   <input value={props.player} name="test_name" />
+	   <input value={props.player} name="test_name" onChange=""/>
         <button onClick={() => handleInputChange('playing', false)}>
 	     Stop Game
         </button>
