@@ -69,28 +69,28 @@ export default function Home() {
       
       return (
 		<tr>
-		  <td className="font-bold text-lg bg-blue-300">{plops.rank + 1}</td>
-		  <td className="font-bold text-white text-xl bg-blue-800">{plugParsed.name}</td>
-		  <td className="font-bold text-white text-xl bg-blue-800">{plugParsed.store_location}</td>
-		  <td className="font-bold p-2 bg-blue-300">{plugParsed.current_score}</td>
+		  <td className="font-bold text-xl bg-blue-300 border border-gray-300 text-center"><strong>{plops.rank + 1}</strong></td>
+		  <td className="font-bold text-white text-xl bg-blue-800 border border-gray-300 text-center">{plugParsed.name}</td>
+		  <td className="font-bold text-white text-xl bg-blue-800 border border-gray-300 text-center">{plugParsed.store_location}</td>
+		  <td className="font-bold p-2 m-2 bg-blue-300 border border-gray-300 text-center">{plugParsed.current_score}</td>
 	     </tr>
 	   )
     }
     
     return ( 
-	   <table className="w-full h-130">
+	   <table className="w-full h-140 border-seperate border border-gray-300">
 		  <thead>
 		    <tr>
 		      <th className="bg-blue-700"></th>
-			 <th className="w-max"><h1 className="bg-blue-700 text-5xl p-3 text-white">Leaderboard</h1></th>
+			 <th className=""><h1 className="bg-blue-700 text-5xl p-3 text-white">Leaderboard</h1></th>
 		      <th className="bg-blue-700"></th>
 		      <th className="bg-blue-700"></th>
 		    </tr>
 		    <tr className="bg-yellow-400 text-bold">
-		      <th className="text-bold" >Rank</th>
-		      <th className="text-bold" >Player</th>
-			 <th className="text-bold">Store Location</th>
-			 <th className="text-bold">Score</th>
+		      <th className="text-bold border border-gray-300" >Rank</th>
+		      <th className="text-bold border border-gray-300" >Player</th>
+			 <th className="text-bold border border-gray-300">Store Location</th>
+			 <th className="text-bold border border-gray-300">Score</th>
 		    </tr>
 		  </thead>
 	     <tbody>{ranked.map((player, index) => <Rank key={player.id} plops={ranked[index]} rank={index} name={player.name} store_location={player.store_location} current_score={player.current_score} />)}</tbody>
