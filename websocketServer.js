@@ -31,31 +31,31 @@ const serial_port = new SerialPort({ path: 'COM10', baudRate: 115200});
 const parser = serial_port.pipe(new ReadlineParser({ delimiter: '\r\n'}));
 parser.on('data', (data) => {
     // can parse from here, to points system
-    if ( data === 'X007B[ZONE01=ENTER]') {
+    if ( data === 'X007B[ZONE01=EXIT]') {
 	   console.log('Signal Received:', data);
 	   io.emit('serialdata', { data: 1 });
     };
-    if ( data === 'X007B[ZONE02=ENTER]') {
+    if ( data === 'X007B[ZONE02=EXIT]') {
 	   console.log('Signal Received:', data);
 	   io.emit('serialdata', { data: 5 });
     };
-    if ( data === 'X007B[ZONE03=ENTER]') {
+    if ( data === 'X007B[ZONE03=EXIT]') {
 	   console.log('Signal Received:', data);
 	   io.emit('serialdata', { data: 5 });
     };
-    if ( data === 'X007B[ZONE04=ENTER]') {
+    if ( data === 'X007B[ZONE04=EXIT]') {
 	   console.log('Signal Received:', data);
 	   io.emit('serialdata', { data: 10 });
     };
-    if ( data === 'X007B[ZONE05=ENTER]') {
+    if ( data === 'X007B[ZONE05=EXIT]') {
 	   console.log('Signal Received:', data);
 	   io.emit('serialdata', { data: 5 });
     };
-    if ( data === 'X007B[ZONE06=ENTER]') {
+    if ( data === 'X007B[ZONE06=EXIT]') {
 	   console.log('Signal Received:', data);
 	   io.emit('serialdata', { data: 5 });
     };
-    if ( data === 'X007B[ZONE07=ENTER]') {
+    if ( data === 'X007B[ZONE07=EXIT]') {
 	   console.log('Signal Received:', data);
 	   io.emit('serialdata', { data: 1 });
     };

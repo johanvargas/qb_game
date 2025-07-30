@@ -1,6 +1,8 @@
 import { useProps } from './app.jsx'
 import { useState, useEffect } from 'react'
 
+import leaderboard_title from './assets/leaderboard_title.png'
+
 const mockPlayers = [
     {
 	   "id": 34623452,
@@ -48,7 +50,6 @@ const realPlayers = () => {
 
   const sortedArray = sendArray.sort((a, b) => b.current_score - a.current_score) 
   const filterArray = sortedArray.filter(a => a.current_score > 0)
-  console.log('hello there!', filterArray)
 
   return filterArray
 }
@@ -68,32 +69,39 @@ export default function Home() {
       const plugParsed = plug[0]
       
       return (
-		<tr>
-		  <td className="font-bold text-xl bg-blue-300 border border-gray-300 text-center"><strong>{plops.rank + 1}</strong></td>
-		  <td className="font-bold text-white text-xl bg-blue-800 border border-gray-300 text-center">{plugParsed.name}</td>
-		  <td className="font-bold text-white text-xl bg-blue-800 border border-gray-300 text-center">{plugParsed.store_location}</td>
-		  <td className="font-bold p-2 m-2 bg-blue-300 border border-gray-300 text-center">{plugParsed.current_score}</td>
+		<tr >
+		  <td className="text-white text-2xl bg-blue-500 text-center"><strong>{plops.rank + 1}</strong></td>
+		  <td className="font-bold text-white text-xl bg-blue-800 text-center uppercase">{plugParsed.name}</td>
+		  <td className="font-bold text-white text-2xl bg-blue-800 text-center uppercase">{plugParsed.store_location}</td>
+		  <td className="font-bold text-white bg-blue-500 text-center text-3xl">{plugParsed.current_score}</td>
 	     </tr>
 	   )
     }
     
-    return ( 
-	   <table className="w-full h-140 border-seperate border border-gray-300">
+    return (
+	 <div className="font-sans">
+	   <div className=""><img className="h-30 m-auto" src={leaderboard_title} alt="leaderboard" /></div>
+	   <table className="w-full h-120 p-2 m-2">
 		  <thead>
-		    <tr>
-		      <th className="bg-blue-700"></th>
-			 <th className=""><h1 className="bg-blue-700 text-5xl p-3 text-white">Leaderboard</h1></th>
-		      <th className="bg-blue-700"></th>
-		      <th className="bg-blue-700"></th>
-		    </tr>
-		    <tr className="bg-yellow-400 text-bold">
-		      <th className="text-bold border border-gray-300" >Rank</th>
-		      <th className="text-bold border border-gray-300" >Player</th>
-			 <th className="text-bold border border-gray-300">Store Location</th>
-			 <th className="text-bold border border-gray-300">Score</th>
+		    <tr className="bg-blue-500 text-white">
+		      <th className="text-bold p-4 text-2xl" >Rank</th>
+		      <th className="text-bold p-4 text-2xl" >Player</th>
+			 <th className="text-bold p-4 text-2xl">Store Location</th>
+			 <th className="text-bold p-4 text-2xl">Score</th>
 		    </tr>
 		  </thead>
-	     <tbody>{ranked.map((player, index) => <Rank key={player.id} plops={ranked[index]} rank={index} name={player.name} store_location={player.store_location} current_score={player.current_score} />)}</tbody>
+	     <tbody>
+		  {ranked.map((player, index) => 
+		    <Rank key={player.id} plops={ranked[index]} 
+		    rank={index} name={player.name} store_location={player.store_location} 
+		    current_score={player.current_score} />)}
+		</tbody>
 	   </table>
-	 )
+	 </div>
+    )
 }
+
+/*
+<h1 className="bg-blue-700 text-5xl p-3 text-white">Leaderboard</h1>
+<th className="bg-blue-700"></th>
+*/

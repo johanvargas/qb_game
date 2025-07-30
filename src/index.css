@@ -1,8 +1,15 @@
 @import "tailwindcss";
 :root {
-  background-image: url("./assets/grass-tile.jpg");
-  background-repeat: repeat;
+  background-image: url("./assets/gradient_blue_bg.png");
+  font-family: "BebaNeueRegular";
 }
+@font-face {
+  font-family: "BebasNeueRegular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./assests/BebasNeueRegular.ttf") format("ttf");
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -10,17 +17,20 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: var(--color-lime-300);
+  background-color: var(--color-blue-200);
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
 div {
   padding: 1.0rem;
 }
