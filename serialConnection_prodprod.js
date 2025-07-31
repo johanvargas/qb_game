@@ -54,16 +54,16 @@ function setupFoi () {
 function setupBoard () {
     /*** ZONES ***/
     // Clear default zones
-    setTimeout(() => sendCommand('X007B[CLEARALLZONES]'), 1000);
+    //setTimeout(() => sendCommand('X007B[CLEARALLZONES]'), 1000);
 
     // Define active zone
-    setTimeout(() => sendCommand('X007B[ZONE01=-010,+042,022,022]'), 2000);
-    setTimeout(() => sendCommand('X007B[ZONE02=-041,+000,028,028]'), 3000);
-    setTimeout(() => sendCommand('X007B[ZONE03=+019,+000,028,028]'), 4000);
-    setTimeout(() => sendCommand('X007B[ZONE04=-000,-044,038,038]'), 5000);
-    setTimeout(() => sendCommand('X007B[ZONE05=-042,-063,022,022]'), 6000);
-    setTimeout(() => sendCommand('X007B[ZONE06=+022,-063,022,022]'), 7000);
-    setTimeout(() => sendCommand('X007B[ZONE07=-019,-106,038,038]'), 8000);
+    //setTimeout(() => sendCommand('X007B[ZONE01=-010,+042,022,022]'), 2000);
+    //setTimeout(() => sendCommand('X007B[ZONE02=-041,+000,028,028]'), 3000);
+    //setTimeout(() => sendCommand('X007B[ZONE03=+019,+000,028,028]'), 4000);
+    //setTimeout(() => sendCommand('X007B[ZONE04=-000,-044,038,038]'), 5000);
+    //setTimeout(() => sendCommand('X007B[ZONE05=-042,-063,022,022]'), 6000);
+    //setTimeout(() => sendCommand('X007B[ZONE06=+022,-063,022,022]'), 7000);
+    //setTimeout(() => sendCommand('X007B[ZONE07=-019,-106,038,038]'), 8000);
 
     // Confirm number of zones
     setTimeout(() => sendCommand('X007B[ZONES?]'), 9800);

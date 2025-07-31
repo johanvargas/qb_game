@@ -80,9 +80,9 @@ export default function Home() {
     
     return (
 	 <div className="font-sans">
-	   <div className=""><img className="h-30 m-auto" src={leaderboard_title} alt="leaderboard" /></div>
-	   <table className="w-full h-120 p-2 m-2">
-		  <thead>
+	   <div className="p-7"><img className="h-50 m-auto" src={leaderboard_title} alt="leaderboard" /></div>
+	   <table className="w-full h-140 pt-4 m-2">
+		  <thead className="pt-10">
 		    <tr className="bg-blue-500 text-white">
 		      <th className="text-bold p-4 text-2xl" >Rank</th>
 		      <th className="text-bold p-4 text-2xl" >Player</th>

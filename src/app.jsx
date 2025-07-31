@@ -3,6 +3,7 @@ import { io } from "socket.io-client"
 import Home from './Home'
 
 import header from './assets/header.png'
+import gradient from './assets/gradient_blue_bg.png'
 
 // Router
 const Router = ({ children }) => {
@@ -305,7 +306,7 @@ const Display = () => {
     return (
 	 <div className="flex flex-col bg-blue-400">
 	   <div className="">
-		<h1>Last Serial Command Received:<span className="">{serialData}</span></h1>
+		<div>Last Serial Command Received:<span className="">{serialData}</span></div>
 		<p className="font-bold text-2xl">{stat ? 'Connected' : 'Disconnected'}</p>
 	   </div>
 	   <div className="bg-green-500 text-center rounded-sm">
@@ -353,9 +354,11 @@ const Display = () => {
     },[])
 
     useEffect(() => {
-      setTimeout(() => {
-        setMsg('Hike!')
-      }, 3000)
+	 if (props.playing) {
+	   setTimeout(() => {
+		setMsg('Hike!')
+	   }, 3000)
+	 }
     },[])
 
     useEffect(() => {
@@ -368,8 +371,7 @@ const Display = () => {
       if (msg === '') {
 	   return <div className="bg">{msg}</div>
 	 }
-      
-	 return <div className="block w-350 h-120 text-center fixed top-60 right-70 left-70 text-8xl bg-blue-600"><h1 className="text-white">{msg}</h1></div>
+	 return <div className="absolute bg-[url('./assets/gradient_blue_bg.png')] text-center fixed top-60 right-70 left-70 text-8xl bg-blue-600"><div className="text-white">{msg}</div></div>
     }
 
     return (
