@@ -210,9 +210,6 @@ const Admin = () => {
 		</form>
 	   </div>
 	 </div>
-		<div>
-		  <p className="text-gray-300 text-lg p-2">Number of players stored: {localStorage.length}</p> 
-        </div>
     </div>
     )
   }
@@ -228,10 +225,10 @@ const Admin = () => {
 	 }
 	 array.push(value)
     }
-//TODO: beautify cards
+//TODO: beautify cards +1/4
     const playerCard = (item) => {
 	 return (
-	   <div className="m-2 bg-gray-100 text-center" key={JSON.parse(item).id}>
+	   <div className="m-2 bg-violet-300 text-center" key={JSON.parse(item).id}>
 		<img className="h-5 w-5" src={star} alt="star" />
 		<div className="">{JSON.parse(item).name}</div> 
 		<div>{JSON.parse(item).store_location}</div>
@@ -246,7 +243,37 @@ const Admin = () => {
 	 </>
     )
   }
-//TODO: beautify forms
+
+  const DeletePlayer = () => {
+    const [name, setName] = useState('')
+    function handleDeletePlayer (formData) {
+	 console.log('Delete Player: ', formData.get("name"))
+	 const player = formData.get("name")
+	 if (localStorage.getItem(player)) {
+	   console.log('We got a match', localStorage.getItem(player))
+	 }
+    }
+
+    return (
+	 <div className="bg-fuchsia-300 p-5">        
+	   <form action={handleDeletePlayer}>
+		<fieldset>
+		  <legend className="rounded-sm">Delete Player</legend>
+		  <label className="">Name</label>
+		  <input className="bg-gray-100" 
+		    value={name} 
+		    name="name" 
+		    onChange={e => setName(e.target.value)} 
+		    placeholder="enter name" />
+		  <br/>
+		  <button className="content-center hover:bg-gray-300">Delete Player</button>
+		</fieldset>
+	   </form>
+	 </div>
+    )
+  }
+
+//TODO: beautify forms +1/2
   return (
     <div className="font-sans">
 	 <header className="font-sans mb-17 pt-5">
@@ -266,7 +293,7 @@ const Admin = () => {
 		</fieldset>
 	   </form>
 	 </div>
-	 <div className="">
+	 <div>
 	   <form onSubmit={handleSubmitStop}>
 	 	<fieldset>
 	 	  <input className="hidden" value={props.player} name="test_name"/>
@@ -278,13 +305,23 @@ const Admin = () => {
 	  </div>
     </div >
 	   <div><CreatePlayer /></div>
+	   <div><DeletePlayer /></div>
+	   <div>
+	     <p className="text-gray-300 text-lg p-2">
+		  Number of players stored: {localStorage.length}
+		</p> 
+        </div>
 	   <div className="grid grid-cols-3"><PlayerList /></div>
     </div>
   )
 }
+
 /*************************************/
 /*** GAME PLAY/ LEADERBOARD SCREEN ***/
 /*************************************/
+
+//TODO: game flow check
+//TODO: in/out displays
 const Display = () => {
   const { props, handleInputChange } = useProps()
   const socket = io("http://localhost:8080")

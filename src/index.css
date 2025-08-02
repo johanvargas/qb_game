@@ -2,6 +2,7 @@
 :root {
   background-image: url("./assets/gradient_blue_bg.png");
   font-family: "Bebas Neue";
+  color: var(--color-gray-800)
 }
 
 /* bebas-neue-latin-400-normal */
@@ -37,4 +38,8 @@ button:focus-visible {
 
 div {
   font-family: "Bebas Neue"
+}
+
+form {
+  margin: 1rem;
 }
