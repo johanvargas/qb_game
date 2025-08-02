@@ -1,23 +1,26 @@
 @import "tailwindcss";
 :root {
   background-image: url("./assets/gradient_blue_bg.png");
-  font-family: "BebaNeueRegular";
+  font-family: "Bebas Neue";
 }
 
+/* bebas-neue-latin-400-normal */
 @font-face {
-  font-family: "BebasNeueRegular";
+  font-family: 'Bebas Neue';
   font-style: normal;
+  font-display: swap;
   font-weight: 400;
-  src: urol("./assets/BebasNeue-Regular.ttf") format("ttf");
+  src: url("./assets/BebasNeue-Regular.ttf") format("truetype");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
 
 button {
-  border-radius: 8px;
   border: 1px solid transparent;
+  margin-bottom: 1rem;
   padding: 0.6em 1.2em;
-  font-size: 1em;
+  font-size: 2em;
   font-weight: 500;
-  font-family: inherit;
+  font-family: "Bebas Neue";
   background-color: var(--color-blue-200);
   cursor: pointer;
   transition: border-color 0.25s;
@@ -33,6 +36,5 @@ button:focus-visible {
 }
 
 div {
-  padding: 1.5rem;
+  font-family: "Bebas Neue"
 }
-

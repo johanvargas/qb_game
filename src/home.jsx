@@ -3,39 +3,6 @@ import { useState, useEffect } from 'react'
 
 import leaderboard_title from './assets/leaderboard_title.png'
 
-const mockPlayers = [
-    {
-	   "id": 34623452,
-	   "rank": 1,
-	   "store_location": "7656 W Lakeview Dr.",
-	   "score": 175
-    },
-    {
-	   "id": 12352654,
-	   "rank": 2,
-	   "store_location": "Cemetery Ridge, USA",
-	   "score": 115
-    },
-    {
-	   "id": 32759787,
-	   "rank": 3,
-	   "store_location": "221 B Baker St",
-	   "score": 75
-    },
-    {
-	   "id": 46537654,
-	   "rank": 4,
-	   "store_location": "742 Evergreen Terrace",
-	   "score": 50
-    },
-    {
-	   "id": 9878653,
-	   "rank": 5,
-	   "store_location": "124 Conch Street",
-	   "score": 25
-    }
-]
-
 const realPlayers = () => {
   let sendArray = []
   for (let i = 0; i < localStorage.length; i++) {
@@ -55,7 +22,7 @@ const realPlayers = () => {
 }
 
 export default function Home() {
-    const [ranked, setRanked] = useState(mockPlayers)
+    const [ranked, setRanked] = useState('')
     const [hold, setHold] = useState('Hold Item')
 
     useEffect(() => {

@@ -4,6 +4,7 @@ import Home from './Home'
 
 import header from './assets/header.png'
 import gradient from './assets/gradient_blue_bg.png'
+import star from './assets/Star.png'
 
 /*************************************/
 /*** ROUTER AND PROPS ***************/
@@ -102,12 +103,33 @@ const Admin = () => {
     setTimeout(() => handleInputChange('closing', false), 4000)
   },[props.closing])
 
-  // Handle Create Player
+
+  // Handle Start Game //
+  function handleSubmitStart(e) {
+    e.preventDefault()
+    handleInputChange('player', localStorage.getItem('current_player'))
+  }
+
+  // Handle Stop Game //
+  function handleSubmitStop(e) {
+    e.preventDefault()
+    // setting game state to player obj in localStorage
+    const curr_player = localStorage.getItem('current_player')
+    const player_set = localStorage.getItem(curr_player)
+    const u = localStorage.getItem(e.target.test_name.value)
+    const jfy = JSON.parse(u)
+    jfy.current_score = parseInt(localStorage.getItem('score'))
+    localStorage.setItem(e.target.test_name.value, JSON.stringify(jfy))
+    
+  }
+
+  // Handle Create Player //
   function handleSubmitCreate(e) {
     e.preventDefault()
    
+    // this should probably be a class
     const constructPlayer = () => {
-	 const player = {
+	 const quarterback = {
 	   "id": "p" + Date.now(),
 	   "name": name,
 	   "store_location": st,
@@ -115,7 +137,7 @@ const Admin = () => {
 	   "high_score": 0,
 	   "current_score": 0
 	 }
-	 return player
+	 return quarterback
     }
 
     const name = e.target.name.value
@@ -126,26 +148,6 @@ const Admin = () => {
 
     // props.setPlayer(prev => prev.concat({name, species, age, id: Date.now()}))
     handleInputChange('player', name)
-  }
-
-  // Handle Start Game
-  function handleSubmitStart(e) {
-    e.preventDefault()
-    //handleInputChange('playing', true)
-    handleInputChange('player', localStorage.getItem('current_player'))
-  }
-
-  // Handle Stop Game
-  function handleSubmitStop(e) {
-    e.preventDefault()
-    //handleInputChange('playing', false)
-    const curr_player = localStorage.getItem('current_player')
-    const player_set = localStorage.getItem(curr_player)
-    const u = localStorage.getItem(e.target.test_name.value)
-    const jfy = JSON.parse(u)
-    jfy.current_score = parseInt(localStorage.getItem('score'))
-    localStorage.setItem(e.target.test_name.value, JSON.stringify(jfy))
-    
   }
 
   // Handle Select Existing Player to Play
@@ -161,27 +163,28 @@ const Admin = () => {
     const [curr_name, setCurrName] = useState('')
     
     return (
-      <div className="bg-blue-700 p-2 rounded-sm m-auto font-sans"> 
-        <div className="bg-white font-bold rounded-md">
-          <p>Current Player Ready 
-		  <span className="bg-green-400 p-3 m-2 rounded-sm text-xl uppercase">
+      <div> 
+        <div className="bg-white font-bold">
+          <div className="p-4 text-3xl">Current Player Ready 
+		  <span className="bg-green-400 ml-69 text-6xl">
 		    {localStorage.getItem('current_player')}
 		  </span>
-		</p> 
+		</div> 
         </div>
-        <div>        
-          <form className="space-y-8" onSubmit={handleSubmitCreate}>
+	 <div className="grid grid-cols-2">
+        <div className="p-5">        
+          <form className="" onSubmit={handleSubmitCreate}>
 		  <fieldset>
-		    <legend className="font-bold rounded-sm">Add New Player</legend>
+		    <legend>Add New Player</legend>
 		    <label className="">Name</label>
-		    <input type="text" className="bg-blue-200 px-1 m-2" 
+		    <input type="text" className="bg-gray-200 px-1 m-2" 
 			 value={name} 
 			 name="name" 
 			 onChange={e => setName(e.target.value)} 
 			 placeholder="enter name" />
 		    <br/>
-		    <label className="pr-2">Store Location</label>
-		    <input type="text" className="bg-blue-200 px-1 m-3" 
+		    <label className="">Store Location</label>
+		    <input type="text" className="bg-gray-200" 
 			 value={store_location} 
 			 name="store_location" 
 			 onChange={e => setStoreLocation(e.target.value)} 
@@ -191,12 +194,12 @@ const Admin = () => {
 		  </fieldset>
           </form>
         </div>
-	   <div className="bg-blue-300 p-2">        
+	   <div className="bg-green-300 p-5">        
 		<form onSubmit={handleSubmitPick}>
 		  <fieldset>
-		    <legend className="p-2 font-bold rounded-sm">Select Existing Player</legend>
-		    <label className="pr-2">Name</label>
-		    <input className="bg-blue-200 px-1 m-2" 
+		    <legend className="rounded-sm">Select Existing Player</legend>
+		    <label className="">Name</label>
+		    <input className="bg-gray-100" 
 			 value={curr_name} 
 			 name="curr_name" 
 			 onChange={e => setCurrName(e.target.value)} 
@@ -206,8 +209,9 @@ const Admin = () => {
 		  </fieldset>
 		</form>
 	   </div>
+	 </div>
 		<div>
-		  <p className="text-sm font-bold">Number of players stored: {localStorage.length}</p> 
+		  <p className="text-gray-300 text-lg p-2">Number of players stored: {localStorage.length}</p> 
         </div>
     </div>
     )
@@ -224,11 +228,12 @@ const Admin = () => {
 	 }
 	 array.push(value)
     }
-
+//TODO: beautify cards
     const playerCard = (item) => {
 	 return (
-	   <div className="bg-indigo-300 font-sans grid grid-cols-3 gap-1 divide-x-3 divide-solid uppercase font-bold text-center my-2 rounded-lg" key={JSON.parse(item).id}>
-		<div>{JSON.parse(item).name}</div> 
+	   <div className="m-2 bg-gray-100 text-center" key={JSON.parse(item).id}>
+		<img className="h-5 w-5" src={star} alt="star" />
+		<div className="">{JSON.parse(item).name}</div> 
 		<div>{JSON.parse(item).store_location}</div>
 		<div>{JSON.parse(item).current_score}</div>
 	   </div>
@@ -241,18 +246,18 @@ const Admin = () => {
 	 </>
     )
   }
-
+//TODO: beautify forms
   return (
-    <div className="">
-	 <div className="font-sans">
-	   <img className="w-90 m-auto mb-4" src={header} alt="game header" />
-	 </div>
-	 <div className="font-sans bg-blue-600 rounded-sm">
-	   <div className={props.playing? 'm-auto bg-green-300 text-green-600 font-bold text-5xl text-center rounded-full': 'm-auto text-center bg-red-400 text-red-800 font-bold text-5xl rounded-full'}>
-		{props.playing ? 'Ball In Play' : 'Timeout!'}
+    <div className="font-sans">
+	 <header className="font-sans mb-17 pt-5">
+	   <img className="h-30 m-auto" src={header} alt="game header" />
+	 </header>
+	 <div className="h-100 font-sans rounded-sm">
+	   <div className={props.playing? 'w-80 m-auto p-2 pt-3 bg-green-300 text-green-700 font-bold text-7xl text-center rounded-full': 'w-80 m-auto p-2 pt-3 text-center bg-red-400 text-red-700 font-bold font-sans text-7xl rounded-full'}>
+		{props.playing ? 'Hike' : 'Timeout'}
 	 </div>
 	 <br/>
-	 <div className="">
+	 <div>
 	   <form onSubmit={handleSubmitStart}>
 		<fieldset>
 		  <button className="w-full" onClick={() => handleInputChange('playing', true)}>
@@ -263,17 +268,17 @@ const Admin = () => {
 	 </div>
 	 <div className="">
 	   <form onSubmit={handleSubmitStop}>
-		<fieldset>
-		  <input className="hidden" value={props.player} name="test_name"/>
-		    <button  className="w-full" onClick={() => handleInputChange('playing', false)}>
-			 Stop Game
-		    </button>
-		</fieldset>
+	 	<fieldset>
+	 	  <input className="hidden" value={props.player} name="test_name"/>
+	 	    <button  className="w-full" onClick={() => handleInputChange('playing', false)}>
+	 		 Stop Game
+	 	    </button>
+	 	</fieldset>
 	   </form>
-	 </div>
-	 </div>
-	   <CreatePlayer />
-	   <PlayerList />
+	  </div>
+    </div >
+	   <div><CreatePlayer /></div>
+	   <div className="grid grid-cols-3"><PlayerList /></div>
     </div>
   )
 }
@@ -284,6 +289,7 @@ const Display = () => {
   const { props, handleInputChange } = useProps()
   const socket = io("http://localhost:8080")
   
+//TODO: calibrate sensors  
   const Serial = () => {
     const [serialData, setSerialData] = useState('Waiting...')
     const [score, setScore] = useState(0)
@@ -352,7 +358,6 @@ const Display = () => {
 	   const value = localStorage.getItem(key)
 	   array.push(value)
       }
-      
 	 return array
     }
 
