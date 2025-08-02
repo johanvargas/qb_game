@@ -24,6 +24,7 @@ io.on('connection', (socket) => {
 	console.log('socket id: ', socket.id);
 });
 
+// Serial Connection
 import { SerialPort }  from 'serialport';
 import { ReadlineParser } from '@serialport/parser-readline';
 const serial_port = new SerialPort({ path: 'COM10', baudRate: 115200});
@@ -31,33 +32,33 @@ const serial_port = new SerialPort({ path: 'COM10', baudRate: 115200});
 const parser = serial_port.pipe(new ReadlineParser({ delimiter: '\r\n'}));
 parser.on('data', (data) => {
     // can parse from here, to points system
-    if ( data === 'X007B[ZONE01=EXIT]') {
+    if ( data === 'X007B[ZONE01=ENTER]') {
 	   console.log('Signal Received:', data);
-	   io.emit('serialdata', { data: 1 });
+	   io.emit('serialdata', { data: data, time: Date.now(), point: 10 });
+    }
+    if ( data === 'X007B[ZONE02=ENTER]') {
+	   console.log('Signal Received:', data);
+	   io.emit('serialdata', { data: data, time: Date.now(), point: 5 });
     };
-    if ( data === 'X007B[ZONE02=EXIT]') {
+    if ( data === 'X007B[ZONE03=ENTER]') {
 	   console.log('Signal Received:', data);
-	   io.emit('serialdata', { data: 5 });
+	   io.emit('serialdata', { data: data, time: Date.now(), point: 5});
     };
-    if ( data === 'X007B[ZONE03=EXIT]') {
+    if ( data === 'X007B[ZONE04=ENTER]') {
 	   console.log('Signal Received:', data);
-	   io.emit('serialdata', { data: 5 });
+	   io.emit('serialdata', { data: data, time: Date.now(), point: 1});
     };
-    if ( data === 'X007B[ZONE04=EXIT]') {
+    if ( data === 'X007B[ZONE05=ENTER]') {
 	   console.log('Signal Received:', data);
-	   io.emit('serialdata', { data: 10 });
+	   io.emit('serialdata', { data: data, time: Date.now(), point: 6 });
     };
-    if ( data === 'X007B[ZONE05=EXIT]') {
+    if ( data === 'X007B[ZONE06=ENTER]') {
 	   console.log('Signal Received:', data);
-	   io.emit('serialdata', { data: 5 });
+	   io.emit('serialdata', { data: data, time: Date.now(), point: 6 });
     };
-    if ( data === 'X007B[ZONE06=EXIT]') {
+    if ( data === 'X007B[ZONE07=ENTER]') {
 	   console.log('Signal Received:', data);
-	   io.emit('serialdata', { data: 5 });
-    };
-    if ( data === 'X007B[ZONE07=EXIT]') {
-	   console.log('Signal Received:', data);
-	   io.emit('serialdata', { data: 1 });
+	   io.emit('serialdata', { data: data, time: Date.now(), point: 1 });
     };
     console.log('Signal Received:', data);
 });

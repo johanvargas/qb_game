@@ -5,6 +5,9 @@ import Home from './Home'
 import header from './assets/header.png'
 import gradient from './assets/gradient_blue_bg.png'
 
+/*************************************/
+/*** ROUTER AND PROPS ***************/
+/*************************************/
 // Router
 const Router = ({ children }) => {
   const [path, setPath] = useState(window.location.hash || '#/')
@@ -42,7 +45,8 @@ const gameInitialState  = {
   player: 'No player set',
   player_set: false,
   playing: false,
-  closing: false
+  closing: false,
+  intro: false,
 }
 
 // Props provider
@@ -86,7 +90,10 @@ export const useProps = () => {
   return context
 }
 
+/*************************************/
 /*** ADMIN PAGE ***/
+/*************************************/
+
 const Admin = () => {
   const { props, handleInputChange } = useProps()
   const { keepscore, setKeepScore } = useState(localStorage.getItem('score'))
@@ -124,13 +131,14 @@ const Admin = () => {
   // Handle Start Game
   function handleSubmitStart(e) {
     e.preventDefault()
+    //handleInputChange('playing', true)
     handleInputChange('player', localStorage.getItem('current_player'))
   }
 
   // Handle Stop Game
   function handleSubmitStop(e) {
     e.preventDefault()
-
+    //handleInputChange('playing', false)
     const curr_player = localStorage.getItem('current_player')
     const player_set = localStorage.getItem(curr_player)
     const u = localStorage.getItem(e.target.test_name.value)
@@ -138,7 +146,6 @@ const Admin = () => {
     jfy.current_score = parseInt(localStorage.getItem('score'))
     localStorage.setItem(e.target.test_name.value, JSON.stringify(jfy))
     
-    handleInputChange('closing', true)
   }
 
   // Handle Select Existing Player to Play
@@ -156,47 +163,51 @@ const Admin = () => {
     return (
       <div className="bg-blue-700 p-2 rounded-sm m-auto font-sans"> 
         <div className="bg-white font-bold rounded-md">
-          <p>Current Player Ready <span className="bg-green-400 p-3 m-2 rounded-sm text-xl uppercase">{localStorage.getItem('current_player')}</span></p> 
+          <p>Current Player Ready 
+		  <span className="bg-green-400 p-3 m-2 rounded-sm text-xl uppercase">
+		    {localStorage.getItem('current_player')}
+		  </span>
+		</p> 
         </div>
         <div>        
-          <form onSubmit={handleSubmitCreate}>
-          <fieldset>
-            <legend className="font-bold rounded-sm">Add New Player</legend>
-            <label className="">Name</label>
-            <input className="bg-blue-200 px-1 m-2" 
-              value={name} 
-              name="name" 
-              onChange={e => setName(e.target.value)} 
-              placeholder="enter name" />
-		  <br/>
-            <label className="pr-2">Store Location</label>
-            <input className="bg-blue-200 px-1 m-3" 
-              value={store_location} 
-              name="store_location" 
-              onChange={e => setStoreLocation(e.target.value)} 
-              placeholder="enter location" />
-		  <br/>
-            <button className="hover:bg-gray-300">Add Player</button>
-          </fieldset>
-        </form>
-      </div>
-      <div className="bg-blue-300 p-2">        
-	   <form onSubmit={handleSubmitPick}>
-          <fieldset>
-            <legend className="p-2 font-bold rounded-sm">Select Existing Player</legend>
-            <label className="pr-2">Name</label>
-            <input className="bg-blue-200 px-1 m-2" 
-              value={curr_name} 
-              name="curr_name" 
-              onChange={e => setCurrName(e.target.value)} 
-              placeholder="enter name" />
-		  <br/>
-            <button className="content-center hover:bg-gray-300">Select Player</button>
-          </fieldset>
-        </form>
-      </div>
-        <div>
-          <p className="text-sm font-bold">Number of players stored: {localStorage.length}</p> 
+          <form className="space-y-8" onSubmit={handleSubmitCreate}>
+		  <fieldset>
+		    <legend className="font-bold rounded-sm">Add New Player</legend>
+		    <label className="">Name</label>
+		    <input type="text" className="bg-blue-200 px-1 m-2" 
+			 value={name} 
+			 name="name" 
+			 onChange={e => setName(e.target.value)} 
+			 placeholder="enter name" />
+		    <br/>
+		    <label className="pr-2">Store Location</label>
+		    <input type="text" className="bg-blue-200 px-1 m-3" 
+			 value={store_location} 
+			 name="store_location" 
+			 onChange={e => setStoreLocation(e.target.value)} 
+			 placeholder="enter location" />
+		    <br/>
+		    <button className="hover:bg-gray-300">Add Player</button>
+		  </fieldset>
+          </form>
+        </div>
+	   <div className="bg-blue-300 p-2">        
+		<form onSubmit={handleSubmitPick}>
+		  <fieldset>
+		    <legend className="p-2 font-bold rounded-sm">Select Existing Player</legend>
+		    <label className="pr-2">Name</label>
+		    <input className="bg-blue-200 px-1 m-2" 
+			 value={curr_name} 
+			 name="curr_name" 
+			 onChange={e => setCurrName(e.target.value)} 
+			 placeholder="enter name" />
+		    <br/>
+		    <button className="content-center hover:bg-gray-300">Select Player</button>
+		  </fieldset>
+		</form>
+	   </div>
+		<div>
+		  <p className="text-sm font-bold">Number of players stored: {localStorage.length}</p> 
         </div>
     </div>
     )
@@ -214,12 +225,10 @@ const Admin = () => {
 	 array.push(value)
     }
 
-    //{array.map((p, index) => (<li className="bg-white m-1"key={index}>{JSON.parse(p)}</li>))}
-    //return <p>{JSON.parse(array[0]).store_location}</p>
     const playerCard = (item) => {
 	 return (
 	   <div className="bg-indigo-300 font-sans grid grid-cols-3 gap-1 divide-x-3 divide-solid uppercase font-bold text-center my-2 rounded-lg" key={JSON.parse(item).id}>
-		<div className="">{JSON.parse(item).name}</div> 
+		<div>{JSON.parse(item).name}</div> 
 		<div>{JSON.parse(item).store_location}</div>
 		<div>{JSON.parse(item).current_score}</div>
 	   </div>
@@ -241,59 +250,56 @@ const Admin = () => {
 	 <div className="font-sans bg-blue-600 rounded-sm">
 	   <div className={props.playing? 'm-auto bg-green-300 text-green-600 font-bold text-5xl text-center rounded-full': 'm-auto text-center bg-red-400 text-red-800 font-bold text-5xl rounded-full'}>
 		{props.playing ? 'Ball In Play' : 'Timeout!'}
-	   </div>
-	   <br/>
-	   <div className="">
-		<form onSubmit={handleSubmitStart}>
-		  <fieldset>
-		    <button className="w-full" onClick={() => handleInputChange('playing', true)}>
-			 Start Game
-		    </button>
-		  </fieldset>
-		</form>
-	   </div>
-	   <div className="">
-		<form onSubmit={handleSubmitStop}>
-		  <fieldset>
-		    <input className="hidden" value={props.player} name="test_name"/>
+	 </div>
+	 <br/>
+	 <div className="">
+	   <form onSubmit={handleSubmitStart}>
+		<fieldset>
+		  <button className="w-full" onClick={() => handleInputChange('playing', true)}>
+		    Start Game
+		  </button>
+		</fieldset>
+	   </form>
+	 </div>
+	 <div className="">
+	   <form onSubmit={handleSubmitStop}>
+		<fieldset>
+		  <input className="hidden" value={props.player} name="test_name"/>
 		    <button  className="w-full" onClick={() => handleInputChange('playing', false)}>
 			 Stop Game
 		    </button>
-		  </fieldset>
-		</form>
-	   </div>
+		</fieldset>
+	   </form>
+	 </div>
 	 </div>
 	   <CreatePlayer />
 	   <PlayerList />
     </div>
   )
 }
-
+/*************************************/
 /*** GAME PLAY/ LEADERBOARD SCREEN ***/
+/*************************************/
 const Display = () => {
   const { props, handleInputChange } = useProps()
-
   const socket = io("http://localhost:8080")
   
   const Serial = () => {
     const [serialData, setSerialData] = useState('Waiting...')
-    const [stat, setStat] = useState(false)
     const [score, setScore] = useState(0)
-    
+    const [point, setPoint] = useState(0)
+    const [time, setTime] = useState(0)
+    const [prev, setPrev] = useState('')
+
     useEffect(() => {
 	 socket.on('serialdata', (data) => {
-	   setSerialData(data.data)
-	   incrementScore(data.data)
-	   setStat(true)
+	   console.log('serial data: ', data)
+	   incrementScore(data.point)
 	 })
-
-	 //socket.on('disconnect', () => {
-	 //  setStat(false)
-	 //})
     
 	 localStorage.setItem('score', score)
 
-    }, [score, stat])
+    }, [score])
 
     const incrementScore = (points) => {
       setScore(score + points)
@@ -305,9 +311,8 @@ const Display = () => {
 		
     return (
 	 <div className="flex flex-col bg-blue-400">
-	   <div className="">
-		<div>Last Serial Command Received:<span className="">{serialData}</span></div>
-		<p className="font-bold text-2xl">{stat ? 'Connected' : 'Disconnected'}</p>
+	   <div>
+		<div className="text-2xl">Last Serial Command Received:<span className="">{serialData}</span></div>
 	   </div>
 	   <div className="bg-green-500 text-center rounded-sm">
 		<p className="text-3xl justify-center">Score</p>
@@ -319,10 +324,6 @@ const Display = () => {
 
   // Screen Leaderboard
   const LeaderBoard = () => {
-    if ( props.closing === true) {
-	 return <div className="absolute text-center text-9xl font-sans bg-blue-800"><div className="text-white">Your Score Here</div></div>
-    } 
-
     return (
       <Home props={props}/>
     )
@@ -334,7 +335,16 @@ const Display = () => {
     const [addPoints, setAddPoints] = useState(0)
     const [player, setPlayer] = useState('')
     const [closingState, setClosingState] = useState(props.closing)
-    
+    const [introState, setIntroState] = useState(props.intro)
+
+    //if (props.closing === true && props.playing === false) {
+	 //return <div className="absolute text-center text-9xl font-sans bg-blue-800"><div className="text-white">Your Score Here</div></div>
+    //} 
+
+    //if (props.intro === true && props.playing === true) {
+	 // return <div className="absolute bg-[url('./assets/gradient_blue_bg.png')] bottom-0 left-0 text-center fixed top-60 right-70 left-70 text-8xl bg-blue-600"><div className="text-white">Intro Panel</div></div>
+    //}
+
     const playerlist = () => {
       const array = []
       for (let i = 0; i < localStorage.length; i++) {
@@ -346,41 +356,10 @@ const Display = () => {
 	 return array
     }
 
-    useEffect(() => {
-      const pl = playerlist()
-      setTimeout(() => {
-        setMsg('Set')
-      }, 1250) 
-    },[])
-
-    useEffect(() => {
-	 if (props.playing) {
-	   setTimeout(() => {
-		setMsg('Hike!')
-	   }, 3000)
-	 }
-    },[])
-
-    useEffect(() => {
-      setTimeout(() => {
-        setMsg('')
-      }, 4200)
-    },[])
-
-    const Curtain = () => {
-      if (msg === '') {
-	   return <div className="bg">{msg}</div>
-	 }
-	 return <div className="absolute bg-[url('./assets/gradient_blue_bg.png')] text-center fixed top-60 right-70 left-70 text-8xl bg-blue-600"><div className="text-white">{msg}</div></div>
-    }
-
     return (
-      <>
-	   <Curtain />
-	   <div className="m-auto">
-	     <Serial />
-	   </div>
-      </>
+	 <div className="m-auto">
+	  <Serial />
+	 </div>
     )
   }
 
@@ -402,27 +381,3 @@ export default function App() {
     </PropsProvider>
   )
 }
-
-/*
- *
-<p>Current localStorage player: { props.player ? props.player: 'Please add a player'}</p> 
-
-  <footer className="text-center text-xs">
-    create by antit3ch 
-  </footer>
-
-
-// localStorage helper, length
-const lsLength = () => {
-  const lStore = localStorage.length
-  return lStore
-}
-
-<p>Is player set? {`${props.playing}`}</p>
-<p>Which player is playing? {props.player}</p>
-
-{array.map(item => <div key={JSON.parse(item).id}>{JSON.parse(item).name} {JSON.parse(item).store_location} {JSON.parse(item).current_score}</p>)}
-
-    //handleInputChange('player_set', props.player_set)
-    //handleInputChange('player', currentPlayer) 
-		*/

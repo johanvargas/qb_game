@@ -24,4 +24,6 @@ dist-ssr
 *.sw?
 
 src/assets/*
+src/notes
 *.config.js
+.gitignore
