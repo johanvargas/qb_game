@@ -370,40 +370,29 @@ const Admin = () => {
 //TODO: in/out displays
 const Display = () => {
   const { props, handleInputChange } = useProps()
-  const socket = io("http://localhost:8080")
   
 //TODO: calibrate sensors  
   const Serial = () => {
     const [serialData, setSerialData] = useState('Waiting...')
     const [score, setScore] = useState(0)
-    const [point, setPoint] = useState(0)
+    const [points, setPoint] = useState([])
     const [time, setTime] = useState(0)
     const [prev, setPrev] = useState('')
 
+    const socket = io("http://localhost:8080")
+
     useEffect(() => {
 	 socket.on('serialdata', (data) => {
-	   console.log('serial data: ', data)
 	   setSerialData(data.data)
-	   incrementScore(data.point)
-
-	   setTimeout(() => {
-		console.log('serial connection closed???')
-		socket.close()
-	   }, 3000)
+	   setScore(data.points)
 	 })
-    
 	 localStorage.setItem('score', score)
-
     }, [score])
 
     const incrementScore = (points) => {
       setScore(score + points)
     } 
 
-    const resetScore = () => {
-      setScore(0)
-    }
-		
     return (
 	 <div className="flex flex-col bg-blue-400">
 	   <div>
@@ -419,8 +408,25 @@ const Display = () => {
 
   // Screen Leaderboard
   const LeaderBoard = () => {
+
+    const ExitScreen = () => {
+	 const [state, setState] = useState({...props})
+	 const [isvisible, setIsVisible] = useState(true)
+
+	 useEffect(() => {
+	   setTimeout(() => {
+		setIsVisible(false)
+	   }, 3000)
+	 }, [isvisible])
+
+	 return isvisible ? <div className="text-3xl text-green-700 bg-orange-300 w-auto h-screen text-center">Exit Screen: {props.playing}</div>: <div className="hidden"></div>
+
+    }
     return (
+	 <>
+	 <ExitScreen />
       <Home props={props}/>
+	 </>
     )
   }
 
@@ -429,35 +435,29 @@ const Display = () => {
     const [msg, setMsg] = useState('Ready')
     const [addPoints, setAddPoints] = useState(0)
     const [player, setPlayer] = useState('')
-    const [closingState, setClosingState] = useState(props.closing)
-    const [introState, setIntroState] = useState(props.intro)
+    const [throws_, setThrows] = useState(3)
 
-    //if (props.closing === true && props.playing === false) {
-	 //return <div className="absolute text-center text-9xl font-sans bg-blue-800"><div className="text-white">Your Score Here</div></div>
-    //} 
+    const LoadScreen = () => {
+	 const [isvisible, setIsVisible] = useState(true)
 
-    //if (props.intro === true && props.playing === true) {
-	 // return <div className="absolute bg-[url('./assets/gradient_blue_bg.png')] bottom-0 left-0 text-center fixed top-60 right-70 left-70 text-8xl bg-blue-600"><div className="text-white">Intro Panel</div></div>
-    //}
+	 useEffect(() => {
+	   setTimeout(() => {
+		setIsVisible(false)
+	   }, 3000)
+	 }, [isvisible])
 
-    const playerlist = () => {
-      const array = []
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i)
-	   const value = localStorage.getItem(key)
-	   array.push(value)
-      }
-	 return array
+	 return isvisible ? <div className="text-3xl text-green-700 bg-yellow-300 w-auto h-screen text-center">Load Screen {props.playing}</div>: <div className="hidden"></div>
     }
 
     return (
 	 <div className="m-auto w-200">
+	   <LoadScreen/>
 	  <Serial />
 	 </div>
     )
   }
 
-  return <div>{props.playing ? (<Game />): (<LeaderBoard />)}</div>
+  return <div>{props.playing ? <Game />: <LeaderBoard />}</div>
 }
 
 // Main App component

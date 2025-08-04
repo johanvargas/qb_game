@@ -44,8 +44,8 @@ serial_port.write(`${command}\r\n`, (err) => {
 })
 
 const parser = serial_port.pipe(new ReadlineParser({ delimiter: '\r\n'}));
+const dataHold = ''
 parser.on('data', (data) => {
-
   //setInterval(() => {
   //  serial_port.write('X001B[103C96FF]', (err) => {
 //	 if (err) {
@@ -55,31 +55,33 @@ parser.on('data', (data) => {
   //  })
   //}, 2000)
 
-  if ( data === 'X007B[ZONE01=ENTER]') {
+  if ( data === 'X007B[ZONE01=EXIT]') {
 	 console.log('Signal Received:', data);
 	 io.emit('serialdata', { data: data, time: Date.now(), point: 10 });
-  }
-  if ( data === 'X007B[ZONE02=ENTER]') {
+	 //serial_port.close()
+	 //serial_port.on('open', () => console.log('connection reestablished with NEXMO'))
+  };
+  if ( data === 'X007B[ZONE02=EXIT]') {
 	 console.log('Signal Received:', data);
 	 io.emit('serialdata', { data: data, time: Date.now(), point: 5 });
   };
-  if ( data === 'X007B[ZONE03=ENTER]') {
+  if ( data === 'X007B[ZONE03=EXIT]') {
 	 console.log('Signal Received:', data);
 	 io.emit('serialdata', { data: data, time: Date.now(), point: 5});
   };
-  if ( data === 'X007B[ZONE04=ENTER]') {
+  if ( data === 'X007B[ZONE04=EXIT]') {
 	 console.log('Signal Received:', data);
 	 io.emit('serialdata', { data: data, time: Date.now(), point: 1});
   };
-  if ( data === 'X007B[ZONE05=ENTER]') {
+  if ( data === 'X007B[ZONE05=EXIT]') {
 	 console.log('Signal Received:', data);
 	 io.emit('serialdata', { data: data, time: Date.now(), point: 6 });
   };
-  if ( data === 'X007B[ZONE06=ENTER]') {
+  if ( data === 'X007B[ZONE06=EXIT]') {
 	 console.log('Signal Received:', data);
 	 io.emit('serialdata', { data: data, time: Date.now(), point: 6 });
   };
-  if ( data === 'X007B[ZONE07=ENTER]') {
+  if ( data === 'X007B[ZONE07=EXIT]') {
 	 console.log('Signal Received:', data);
 	 io.emit('serialdata', { data: data, time: Date.now(), point: 1 });
   };
