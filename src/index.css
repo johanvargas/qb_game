@@ -43,3 +43,7 @@ div {
 form {
   margin: 1rem;
 }
+
+legend {
+  text-decoration-line: underline;
+}

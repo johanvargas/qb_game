@@ -48,6 +48,7 @@ const gameInitialState  = {
   playing: false,
   closing: false,
   intro: false,
+  deck: []
 }
 
 // Props provider
@@ -96,13 +97,29 @@ export const useProps = () => {
 /*************************************/
 
 const Admin = () => {
+  const getDeck = () => {
+    const array = []
+    for (let i = 0; i < localStorage.length; i++) {
+	 const key = localStorage.key(i)
+	 const value = localStorage.getItem(key)
+    
+	 if ( value[0] != '{') {
+	   continue
+	 }
+	 array.push(value)
+    }
+    return array
+  }
+
   const { props, handleInputChange } = useProps()
   const { keepscore, setKeepScore } = useState(localStorage.getItem('score'))
+  const [ deck, setDecks ] = useState(() => getDeck())
 
   useEffect(() => {
-    setTimeout(() => handleInputChange('closing', false), 4000)
-  },[props.closing])
-
+    const fetchData = getDeck()
+    console.log('qbs, ', fetchData)
+    setDecks(fetchData)
+  }, [])
 
   // Handle Start Game //
   function handleSubmitStart(e) {
@@ -120,7 +137,6 @@ const Admin = () => {
     const jfy = JSON.parse(u)
     jfy.current_score = parseInt(localStorage.getItem('score'))
     localStorage.setItem(e.target.test_name.value, JSON.stringify(jfy))
-    
   }
 
   // Handle Create Player //
@@ -148,6 +164,8 @@ const Admin = () => {
 
     // props.setPlayer(prev => prev.concat({name, species, age, id: Date.now()}))
     handleInputChange('player', name)
+    console.log('deck from create player: ', deck)
+    setDeck(getDeck())
   }
 
   // Handle Select Existing Player to Play
@@ -163,99 +181,101 @@ const Admin = () => {
     const [curr_name, setCurrName] = useState('')
     
     return (
-      <div> 
-        <div className="bg-white font-bold">
+      <div className="my-2"> 
+        <div className="bg-white my-2">
           <div className="p-4 text-3xl">Current Player Ready 
-		  <span className="bg-green-400 ml-69 text-6xl">
+		  <span className="bg-green-400 ml-180 text-6xl p-2 m-2 rounded-sm">
 		    {localStorage.getItem('current_player')}
 		  </span>
 		</div> 
         </div>
-	 <div className="grid grid-cols-2">
-        <div className="p-5">        
-          <form className="" onSubmit={handleSubmitCreate}>
-		  <fieldset>
-		    <legend>Add New Player</legend>
-		    <label className="">Name</label>
-		    <input type="text" className="bg-gray-200 px-1 m-2" 
-			 value={name} 
-			 name="name" 
-			 onChange={e => setName(e.target.value)} 
-			 placeholder="enter name" />
-		    <br/>
-		    <label className="">Store Location</label>
-		    <input type="text" className="bg-gray-200" 
-			 value={store_location} 
-			 name="store_location" 
-			 onChange={e => setStoreLocation(e.target.value)} 
-			 placeholder="enter location" />
-		    <br/>
-		    <button className="hover:bg-gray-300">Add Player</button>
-		  </fieldset>
-          </form>
-        </div>
-	   <div className="bg-green-300 p-5">        
-		<form onSubmit={handleSubmitPick}>
-		  <fieldset>
-		    <legend className="rounded-sm">Select Existing Player</legend>
-		    <label className="">Name</label>
-		    <input className="bg-gray-100" 
-			 value={curr_name} 
-			 name="curr_name" 
-			 onChange={e => setCurrName(e.target.value)} 
-			 placeholder="enter name" />
-		    <br/>
-		    <button className="content-center hover:bg-gray-300">Select Player</button>
-		  </fieldset>
-		</form>
+	   <div className="grid grid-cols-2">
+		<div className="p-5 text-3xl bg-emerald-300">        
+		  <form onSubmit={handleSubmitCreate}>
+		    <fieldset>
+			 <legend>Add New Player</legend>
+			 <label className="">Name</label>
+			 <input type="text" className="bg-gray-200 px-1 m-2" 
+			   value={name} 
+			   name="name" 
+			   onChange={e => setName(e.target.value)} 
+			   placeholder="enter name" />
+			 <br/>
+			 <label className="">Store Location</label>
+			 <input type="text" className="bg-gray-200" 
+			   value={store_location} 
+			   name="store_location" 
+			   onChange={e => setStoreLocation(e.target.value)} 
+			   placeholder="enter location" />
+			 <br/>
+			 <button className="hover:bg-gray-300">Add Player</button>
+		    </fieldset>
+		  </form>
+		</div>
+		<div className="bg-green-300 p-5 text-3xl">        
+		  <form onSubmit={handleSubmitPick}>
+		    <fieldset>
+			 <legend className="text-gray-900">Select Existing Player</legend>
+			 <label className="">Name</label>
+			 <br/> 
+			 <input className="bg-gray-100" 
+			   value={curr_name} 
+			   name="curr_name" 
+			   onChange={e => setCurrName(e.target.value)} 
+			   placeholder="enter name" />
+			 <br/>
+			 <br/>
+			 <button className="content-center hover:bg-gray-300">Select Player</button>
+		    </fieldset>
+		  </form>
+		</div>
 	   </div>
 	 </div>
-    </div>
     )
   }
 
-  const PlayerList = () => {
-    const array = []
-    for (let i = 0; i < localStorage.length; i++) {
-	 const key = localStorage.key(i)
-	 const value = localStorage.getItem(key)
-	 
-	 if ( value[0] != '{') {
-	   continue
-	 }
-	 array.push(value)
-    }
-//TODO: beautify cards +1/4
+  const PlayerCards = () => {
+    const [state, setState] = useState(getDeck())
+
+    useEffect(() => {
+	 setState(getDeck())
+    }, [])
+
     const playerCard = (item) => {
+	 console.log('item: ', item)
 	 return (
-	   <div className="m-2 bg-violet-300 text-center" key={JSON.parse(item).id}>
+	   <div className="m-2 p-4 bg-violet-300 text-center grid grid-cols-4 rounded-sm" key={JSON.parse(item).id}>
 		<img className="h-5 w-5" src={star} alt="star" />
-		<div className="">{JSON.parse(item).name}</div> 
+		<div className="text-3xl">{JSON.parse(item).name}</div> 
 		<div>{JSON.parse(item).store_location}</div>
 		<div>{JSON.parse(item).current_score}</div>
 	   </div>
 	 )
     }
-    
+
     return (
 	 <>
-	   {array.map(item => playerCard(item))}
+	   {state.map(item => playerCard(item))}
 	 </>
     )
   }
 
-  const DeletePlayer = () => {
+  const DeletePlayer = ()=> {
     const [name, setName] = useState('')
+
     function handleDeletePlayer (formData) {
 	 console.log('Delete Player: ', formData.get("name"))
 	 const player = formData.get("name")
 	 if (localStorage.getItem(player)) {
 	   console.log('We got a match', localStorage.getItem(player))
+	   localStorage.removeItem(player)
+	   setName(player)
+	   setDecks(getDeck())
 	 }
     }
 
     return (
-	 <div className="bg-fuchsia-300 p-5">        
+	 <div className="bg-fuchsia-300 p-5 text-3xl">        
 	   <form action={handleDeletePlayer}>
 		<fieldset>
 		  <legend className="rounded-sm">Delete Player</legend>
@@ -275,12 +295,12 @@ const Admin = () => {
 
 //TODO: beautify forms +1/2
   return (
-    <div className="font-sans">
-	 <header className="font-sans mb-17 pt-5">
+    <div className="m-auto w-300">
+	 <header className="font-sans mb-15 pt-5">
 	   <img className="h-30 m-auto" src={header} alt="game header" />
 	 </header>
 	 <div className="h-100 font-sans rounded-sm">
-	   <div className={props.playing? 'w-80 m-auto p-2 pt-3 bg-green-300 text-green-700 font-bold text-7xl text-center rounded-full': 'w-80 m-auto p-2 pt-3 text-center bg-red-400 text-red-700 font-bold font-sans text-7xl rounded-full'}>
+	   <div className={props.playing? 'w-80 m-auto p-2 pt-4 bg-green-300 text-green-700 font-bold text-7xl text-center rounded-full': 'w-80 m-auto p-2 pt-4 text-center bg-red-400 text-red-700 font-bold font-sans text-7xl rounded-full'}>
 		{props.playing ? 'Hike' : 'Timeout'}
 	 </div>
 	 <br/>
@@ -299,7 +319,7 @@ const Admin = () => {
 	 	  <input className="hidden" value={props.player} name="test_name"/>
 	 	    <button  className="w-full" onClick={() => handleInputChange('playing', false)}>
 	 		 Stop Game
-	 	    </button>
+	 	    </button> 
 	 	</fieldset>
 	   </form>
 	  </div>
@@ -311,7 +331,7 @@ const Admin = () => {
 		  Number of players stored: {localStorage.length}
 		</p> 
         </div>
-	   <div className="grid grid-cols-3"><PlayerList /></div>
+	   <div className="grid grid-cols-3"><PlayerCards /></div>
     </div>
   )
 }
@@ -337,6 +357,7 @@ const Display = () => {
     useEffect(() => {
 	 socket.on('serialdata', (data) => {
 	   console.log('serial data: ', data)
+	   setSerialData(data.data)
 	   incrementScore(data.point)
 	 })
     
@@ -399,7 +420,7 @@ const Display = () => {
     }
 
     return (
-	 <div className="m-auto">
+	 <div className="m-auto w-200">
 	  <Serial />
 	 </div>
     )

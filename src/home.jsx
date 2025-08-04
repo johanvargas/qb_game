@@ -2,6 +2,7 @@ import { useProps } from './app.jsx'
 import { useState, useEffect } from 'react'
 
 import leaderboard_title from './assets/leaderboard_title.png'
+import mockQuaterbacks from './mockQuarterbacks.js'
 
 const realPlayers = () => {
   let sendArray = []
@@ -22,11 +23,11 @@ const realPlayers = () => {
 }
 
 export default function Home() {
-    const [ranked, setRanked] = useState('')
+    const [ranked, setRanked] = useState([])
     const [hold, setHold] = useState('Hold Item')
 
     useEffect(() => {
-      const realPlayerList = realPlayers()
+      const realPlayerList = realPlayers(mockQuaterbacks)
       let playerSort = realPlayerList.toSorted(realPlayerList.current_score)
       setRanked(playerSort)
     },[])
@@ -46,9 +47,9 @@ export default function Home() {
     }
     
     return (
-	 <div className="font-sans">
-	   <div className="p-7"><img className="h-50 m-auto" src={leaderboard_title} alt="leaderboard" /></div>
-	   <table className="w-full h-140 pt-4 m-2">
+	 <div className="m-auto w-300">
+	   <div className="p-7"><img className="h-50 m-auto w-200" src={leaderboard_title} alt="leaderboard" /></div>
+	   <table className="w-full h-125 pt-4 m-2">
 		  <thead className="pt-10">
 		    <tr className="bg-blue-500 text-white">
 		      <th className="text-bold p-4 text-2xl" >Rank</th>
@@ -67,8 +68,3 @@ export default function Home() {
 	 </div>
     )
 }
-
-/*
-<h1 className="bg-blue-700 text-5xl p-3 text-white">Leaderboard</h1>
-<th className="bg-blue-700"></th>
-*/
