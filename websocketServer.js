@@ -34,56 +34,74 @@ console.log(serial_port)
 serial_port.on('open', () => {
     console.log('Serial port opened. Listening for Nexmosphere data...');
 });
-const command = 'X003B[240405]'
 
-serial_port.write(`${command}\r\n`, (err) => {
-  if (err) {
-    console.log('error sending command: ', err.message)
-  }
-  console.log('command sent: ', command)
-})
+//const command = 'X003B[240405]'
+
+//serial_port.write(`${command}\r\n`, (err) => {
+//  if (err) {
+//    console.log('error sending command: ', err.message)
+//  }
+//  console.log('command sent: ', command)
+//})
 
 const parser = serial_port.pipe(new ReadlineParser({ delimiter: '\r\n'}));
-const dataHold = ''
+
+function sendCommand(command) {
+  serial_port.write(`${command}\r\n`, (err) => {
+    if (err) {
+	 console.error('Error sending command:', err.message);
+    } else {
+	 console.log('Command sent:', command);
+    }
+  });
+}
+
+setTimeout(() => sendCommand('X003B[230301]'), 50);
 parser.on('data', (data) => {
-  //setInterval(() => {
-  //  serial_port.write('X001B[103C96FF]', (err) => {
-//	 if (err) {
-//	   console.log('error sending command: ', err.message)
-//	 }
-//	 console.log('command sent: ', command)
-  //  })
-  //}, 2000)
 
   if ( data === 'X007B[ZONE01=EXIT]') {
 	 console.log('Signal Received:', data);
 	 io.emit('serialdata', { data: data, time: Date.now(), point: 10 });
+
+	 setTimeout(() => sendCommand('X003B[240301]'), 100);
 	 //serial_port.close()
 	 //serial_port.on('open', () => console.log('connection reestablished with NEXMO'))
   };
   if ( data === 'X007B[ZONE02=EXIT]') {
 	 console.log('Signal Received:', data);
 	 io.emit('serialdata', { data: data, time: Date.now(), point: 5 });
+
+	 setTimeout(() => sendCommand('X003B[240301]'), 100);
   };
   if ( data === 'X007B[ZONE03=EXIT]') {
 	 console.log('Signal Received:', data);
 	 io.emit('serialdata', { data: data, time: Date.now(), point: 5});
+
+	 setTimeout(() => sendCommand('X003B[240301]'), 100);
   };
   if ( data === 'X007B[ZONE04=EXIT]') {
 	 console.log('Signal Received:', data);
 	 io.emit('serialdata', { data: data, time: Date.now(), point: 1});
+
+	 setTimeout(() => sendCommand('X003B[240301]'), 100);
   };
   if ( data === 'X007B[ZONE05=EXIT]') {
 	 console.log('Signal Received:', data);
 	 io.emit('serialdata', { data: data, time: Date.now(), point: 6 });
+
+	 setTimeout(() => sendCommand('X003B[240301]'), 100);
   };
   if ( data === 'X007B[ZONE06=EXIT]') {
 	 console.log('Signal Received:', data);
 	 io.emit('serialdata', { data: data, time: Date.now(), point: 6 });
+    
+	 setTimeout(() => sendCommand('X003B[240301]'), 100);
   };
   if ( data === 'X007B[ZONE07=EXIT]') {
 	 console.log('Signal Received:', data);
 	 io.emit('serialdata', { data: data, time: Date.now(), point: 1 });
+
+	 setTimeout(() => sendCommand('X003B[240301]'), 100);
   };
-  console.log('Signal Received:', data);
+  setTimeout(() => sendCommand('X003B[260201]'), 100);
 });

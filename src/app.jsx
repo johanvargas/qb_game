@@ -9,6 +9,7 @@ import star from './assets/Star.png'
 /*************************************/
 /*** ROUTER AND PROPS ***************/
 /*************************************/
+
 // Router
 const Router = ({ children }) => {
   const [path, setPath] = useState(window.location.hash || '#/')
@@ -419,7 +420,7 @@ const Display = () => {
 	   }, 3000)
 	 }, [isvisible])
 
-	 return isvisible ? <div className="text-3xl text-green-700 bg-orange-300 w-auto h-screen text-center">Exit Screen: {props.playing}</div>: <div className="hidden"></div>
+	 return isvisible ? <div className="text-3xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-auto h-screen text-center">YOUR SCORE: {props.score}</div>: <div className="hidden"></div>
 
     }
     return (
@@ -446,7 +447,16 @@ const Display = () => {
 	   }, 3000)
 	 }, [isvisible])
 
-	 return isvisible ? <div className="text-3xl text-green-700 bg-yellow-300 w-auto h-screen text-center">Load Screen {props.playing}</div>: <div className="hidden"></div>
+
+	 const LoadScreenPresentation = () => {
+	   return <div className="text-3xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-auto h-screen text-center">Load Screen {props.playing}</div>
+	 }
+
+	 return (
+	   <>
+	   {isvisible ? <LoadScreenPresentation /> : <div className="hidden"></div>}
+	   </>
+	 )
     }
 
     return (
