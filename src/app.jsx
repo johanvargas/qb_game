@@ -293,6 +293,32 @@ const Admin = () => {
     )
   }
 
+  const ledButton = () => {
+    const socket = io("http://localhost:8080")
+
+    useEffect(() => {
+	 
+    },[])
+ 
+    return (
+	 <div className="bg-orange-300 p-5 text-3xl">        
+	   <form action={handleLEDControl}>
+		<fieldset>
+		  <legend className="rounded-sm">LED Control</legend>
+		  <label className="">Name</label>
+		  <input className="bg-gray-100" 
+		    value={name} 
+		    name="name" 
+		    onChange={e => setName(e.target.value)} 
+		    placeholder="enter name" />
+		  <br/>
+		  <button className="content-center hover:bg-gray-300">Send Command</button>
+		</fieldset>
+	   </form>
+	 </div>
+    )
+  }
+
 //TODO: beautify forms +1/2
   return (
     <div className="m-auto w-300">
@@ -359,6 +385,11 @@ const Display = () => {
 	   console.log('serial data: ', data)
 	   setSerialData(data.data)
 	   incrementScore(data.point)
+
+	   setTimeout(() => {
+		console.log('serial connection closed???')
+		socket.close()
+	   }, 3000)
 	 })
     
 	 localStorage.setItem('score', score)

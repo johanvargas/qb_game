@@ -1,9 +1,11 @@
 import { useProps } from './app.jsx'
 import { useState, useEffect } from 'react'
 
+// assets
 import leaderboard_title from './assets/leaderboard_title.png'
 import mockQuaterbacks from './mockQuarterbacks.js'
 
+// collects users stored in localStorage for use in state
 const realPlayers = () => {
   let sendArray = []
   for (let i = 0; i < localStorage.length; i++) {
@@ -22,6 +24,7 @@ const realPlayers = () => {
   return filterArray
 }
 
+// probably should be called HomeScreen, but I'm not changing rn
 export default function Home() {
     const [ranked, setRanked] = useState([])
     const [hold, setHold] = useState('Hold Item')

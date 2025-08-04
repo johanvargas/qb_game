@@ -14,10 +14,10 @@ port.on('open', () => {
 parser.on('data', (data) => {
     console.log('Received:', data);
     // Example: Parse specific commands or responses
-    if (data.startsWith('X')) {
-        console.log('Nexmosphere command detected:', data);
+    //if (data.startsWith('X')) {
+      //  console.log('Nexmosphere command detected:', data);
         // Add logic to handle specific commands or events
-    }
+    //}
 });
 
 // Send command to XN-145
@@ -33,9 +33,9 @@ function sendCommand(command) {
 
 function checkNexmo () {
     // Check device type, number of configured zones
-    setTimeout(() => sendCommand('D007B[TYPE]'), 100)
-    setTimeout(() => sendCommand('X007B[ZONES?]'), 600)
-    setTimeout(() => sendCommand('X007B[FOI?]'), 1200)
+    setTimeout(() => sendCommand('D007B[TYPE]'), 1000)
+    setTimeout(() => sendCommand('X007B[ZONES?]'), 3000)
+    setTimeout(() => sendCommand('X007B[FOI?]'), 4500)
 };
 
 function setupFoi () {
@@ -57,29 +57,33 @@ function setupBoard () {
     setTimeout(() => sendCommand('X007B[CLEARALLZONES]'), 1000);
 
     // Define active zone
-    setTimeout(() => sendCommand('X007B[ZONE01=-010,+042,021,021]'), 2000);
-    setTimeout(() => sendCommand('X007B[ZONE02=-041,+000,027,027]'), 3000);
-    setTimeout(() => sendCommand('X007B[ZONE03=+019,+000,027,027]'), 4000);
-    setTimeout(() => sendCommand('X007B[ZONE04=-000,-044,037,037]'), 5000);
-    setTimeout(() => sendCommand('X007B[ZONE05=-042,-063,021,021]'), 6000);
-    setTimeout(() => sendCommand('X007B[ZONE06=+022,-063,021,021]'), 7000);
-    setTimeout(() => sendCommand('X007B[ZONE07=-019,-106,037,037]'), 8000);
+    setTimeout(() => sendCommand('X007B[ZONE01=-010,+042,022,022]'), 2000);
+    setTimeout(() => sendCommand('X007B[ZONE02=-041,+000,026,026]'), 3000);
+    setTimeout(() => sendCommand('X007B[ZONE03=+019,+000,026,026]'), 4000);
+    setTimeout(() => sendCommand('X007B[ZONE04=-000,-044,036,036]'), 5000);
+    setTimeout(() => sendCommand('X007B[ZONE05=-042,-063,020,020]'), 6000);
+    setTimeout(() => sendCommand('X007B[ZONE06=+022,-063,020,020]'), 7000);
+    setTimeout(() => sendCommand('X007B[ZONE07=-019,-106,036,036]'), 8000);
 
     // Confirm number of zones
     setTimeout(() => sendCommand('X007B[ZONES?]'), 9000);
 
    // Adjust sensor behavior 
-    //setTimeout(() => sendCommand('X007B[ZONE01DELAY=04]'), 10000);
+    setTimeout(() => sendCommand('X007B[ZONE01DELAY=02]'), 10000);
     //setTimeout(() => sendCommand('X007B[ZONE01MINSIZE=15]'), 11000);
-    //setTimeout(() => sendCommand('X007B[ZONE01MAXSIZE=021]'), 11600);
+    //setTimeout(() => sendCommand('X007B[ZONE01MAXSIZE=025]'), 11600);
 
     // Further behavior adjustments
     // set multi dectection
-    //setTimeout(() => sendCommand('X007S[4:1]'), 13900);
+   // setTimeout(() => sendCommand('X007S[4:1]'), 13900);
     // signal quality for detection.
     //setTimeout(() => sendCommand('X007S[8:100]'), 15800);
     // Completed
     setTimeout(() => console.log('Setup Complete'), 20000);
+}
+
+function ledControl () {
+  setInterval(() => sendCommand('X003B[240005]'), 1000);
 }
 
 if ( process.argv[2] == 'check') {
@@ -90,4 +94,7 @@ if ( process.argv[2] == 'updatezones') {
 }
 if ( process.argv[2] == 'setupfoi') {
   setupFoi()
+}
+if ( process.argv[2] == 'led') {
+  ledControl()
 }

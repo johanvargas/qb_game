@@ -29,36 +29,59 @@ import { SerialPort }  from 'serialport';
 import { ReadlineParser } from '@serialport/parser-readline';
 const serial_port = new SerialPort({ path: 'COM10', baudRate: 115200});
 
+console.log(serial_port)
+
+serial_port.on('open', () => {
+    console.log('Serial port opened. Listening for Nexmosphere data...');
+});
+const command = 'X003B[240405]'
+
+serial_port.write(`${command}\r\n`, (err) => {
+  if (err) {
+    console.log('error sending command: ', err.message)
+  }
+  console.log('command sent: ', command)
+})
+
 const parser = serial_port.pipe(new ReadlineParser({ delimiter: '\r\n'}));
 parser.on('data', (data) => {
-    // can parse from here, to points system
-    if ( data === 'X007B[ZONE01=ENTER]') {
-	   console.log('Signal Received:', data);
-	   io.emit('serialdata', { data: data, time: Date.now(), point: 10 });
-    }
-    if ( data === 'X007B[ZONE02=ENTER]') {
-	   console.log('Signal Received:', data);
-	   io.emit('serialdata', { data: data, time: Date.now(), point: 5 });
-    };
-    if ( data === 'X007B[ZONE03=ENTER]') {
-	   console.log('Signal Received:', data);
-	   io.emit('serialdata', { data: data, time: Date.now(), point: 5});
-    };
-    if ( data === 'X007B[ZONE04=ENTER]') {
-	   console.log('Signal Received:', data);
-	   io.emit('serialdata', { data: data, time: Date.now(), point: 1});
-    };
-    if ( data === 'X007B[ZONE05=ENTER]') {
-	   console.log('Signal Received:', data);
-	   io.emit('serialdata', { data: data, time: Date.now(), point: 6 });
-    };
-    if ( data === 'X007B[ZONE06=ENTER]') {
-	   console.log('Signal Received:', data);
-	   io.emit('serialdata', { data: data, time: Date.now(), point: 6 });
-    };
-    if ( data === 'X007B[ZONE07=ENTER]') {
-	   console.log('Signal Received:', data);
-	   io.emit('serialdata', { data: data, time: Date.now(), point: 1 });
-    };
-    console.log('Signal Received:', data);
+
+  //setInterval(() => {
+  //  serial_port.write('X001B[103C96FF]', (err) => {
+//	 if (err) {
+//	   console.log('error sending command: ', err.message)
+//	 }
+//	 console.log('command sent: ', command)
+  //  })
+  //}, 2000)
+
+  if ( data === 'X007B[ZONE01=ENTER]') {
+	 console.log('Signal Received:', data);
+	 io.emit('serialdata', { data: data, time: Date.now(), point: 10 });
+  }
+  if ( data === 'X007B[ZONE02=ENTER]') {
+	 console.log('Signal Received:', data);
+	 io.emit('serialdata', { data: data, time: Date.now(), point: 5 });
+  };
+  if ( data === 'X007B[ZONE03=ENTER]') {
+	 console.log('Signal Received:', data);
+	 io.emit('serialdata', { data: data, time: Date.now(), point: 5});
+  };
+  if ( data === 'X007B[ZONE04=ENTER]') {
+	 console.log('Signal Received:', data);
+	 io.emit('serialdata', { data: data, time: Date.now(), point: 1});
+  };
+  if ( data === 'X007B[ZONE05=ENTER]') {
+	 console.log('Signal Received:', data);
+	 io.emit('serialdata', { data: data, time: Date.now(), point: 6 });
+  };
+  if ( data === 'X007B[ZONE06=ENTER]') {
+	 console.log('Signal Received:', data);
+	 io.emit('serialdata', { data: data, time: Date.now(), point: 6 });
+  };
+  if ( data === 'X007B[ZONE07=ENTER]') {
+	 console.log('Signal Received:', data);
+	 io.emit('serialdata', { data: data, time: Date.now(), point: 1 });
+  };
+  console.log('Signal Received:', data);
 });
