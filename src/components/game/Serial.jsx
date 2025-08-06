@@ -5,15 +5,13 @@ export const Serial = () => {
 	const [serialData, setSerialData] = useState("Waiting...");
 	const [score, setScore] = useState(0);
 	const [points, setPoint] = useState([]);
-	const [time, setTime] = useState(0);
-	const [prev, setPrev] = useState("");
 
 	const socket = io("http://localhost:8080");
 
 	useEffect(() => {
 		socket.on("serialdata", (data) => {
 			setSerialData(data.data);
-			setScore(data.points);
+			incrementScore(data.point);
 		});
 		localStorage.setItem("score", score);
 	}, [score, socket.on]);

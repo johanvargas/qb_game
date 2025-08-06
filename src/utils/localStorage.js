@@ -11,3 +11,23 @@ export const getDeck = () => {
 	}
 	return array;
 };
+
+export const getDeckPlayerScore = (player) => {
+  console.log(player)
+	let score = 0;
+	for (let i = 0; i < localStorage.length; i++) {
+		const key = localStorage.key(i);
+		const value = localStorage.getItem(key);
+
+		if (value[0] !== "{") {
+			continue;
+		}
+
+		if ( player === key) {
+		  const parsePlayer = JSON.parse(value)
+		  score = parsePlayer.current_score
+		  //console.log('score from util: ', score.current_score)
+		} 
+	}
+	return score;
+};

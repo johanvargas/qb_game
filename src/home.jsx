@@ -43,7 +43,7 @@ export default function Home() {
 		     setRanked(playerSort.filter((item) => playerSort.indexOf(item) < 5 ))   
 		} else {
 		     //const playerSort = realPlayerList.toSorted(realPlayerList.current_score)
-		     const playerSort = realPlayersList.toSorted((a, b) => b.current_score - a.current_score)
+		     const playerSort = realPlayerList.toSorted((a, b) => b.current_score - a.current_score)
 		     setRanked(playerSort.filter((item) => playerSort.indexOf(item) < 5 ))   
 		}
 	}, []);
