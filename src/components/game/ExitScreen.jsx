@@ -3,7 +3,7 @@ import { useProps } from "../../hooks/useProps.jsx";
 
 export const ExitScreen = () => {
 	const { props } = useProps();
-	const [state, setState] = useState({ ...props });
+	const [_state, _setState] = useState({ ...props });
 	const [isvisible, setIsVisible] = useState(true);
 
 	useEffect(() => {

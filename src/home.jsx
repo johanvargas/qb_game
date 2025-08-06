@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 // assets
 import leaderboard_title from "./assets/leaderboard_title.png";
-import { useProps } from "./hooks/useProps.jsx";
 import mockQuaterbacks from "./mockQuarterbacks.js";
 
 // collects users stored in localStorage for use in state
@@ -28,7 +27,7 @@ const realPlayers = () => {
 // probably should be called HomeScreen, but I'm not changing rn
 export default function Home() {
 	const [ranked, setRanked] = useState([]);
-	const [hold, setHold] = useState("Hold Item");
+	const [_hold, _setHold] = useState("Hold Item");
 
 	useEffect(() => {
 		const realPlayerList = realPlayers(mockQuaterbacks);

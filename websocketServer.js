@@ -1,9 +1,9 @@
+import { Server as HttpServer } from "node:http";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import cors from "cors";
 import express from "express";
-import { Server as HttpServer } from "http";
-import path from "path";
 import { Server as SocketIOServer } from "socket.io";
-import { fileURLToPath } from "url";
 
 const app = express();
 const server = new HttpServer(app);
@@ -14,7 +14,7 @@ const port = 8080;
 
 app.use(cors());
 server.listen(port, () =>
-	console.log("Socket IO Server running on port " + port),
+	console.log(`Socket IO Server running on port ${port}`),
 );
 
 const filename = fileURLToPath(import.meta.url);
@@ -22,7 +22,7 @@ const dirname = path.dirname(filename);
 
 console.log(dirname);
 
-app.use(express.static(dirname + "/"));
+app.use(express.static(`${dirname}/`));
 
 io.on("connection", (socket) => {
 	console.log("socket id: ", socket.id);

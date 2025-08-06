@@ -1,50 +1,196 @@
 @import "tailwindcss";
 :root {
-	background-image: url("./assets/gradient_blue_bg.png");
-	font-family: "Bebas Neue", sans-serif;
-	color: var(--color-gray-800);
+	--background: oklch(0.07 0 0);
+	--foreground: oklch(0.95 0 0);
+	--card: oklch(0.11 0 0);
+	--card-foreground: oklch(0.95 0 0);
+	--popover: oklch(0.07 0 0);
+	--popover-foreground: oklch(0.95 0 0);
+	--primary: oklch(0.45 0.22 265);
+	--primary-foreground: oklch(0.98 0 0);
+	--secondary: oklch(0.15 0 0);
+	--secondary-foreground: oklch(0.9 0 0);
+	--muted: oklch(0.15 0 0);
+	--muted-foreground: oklch(0.6 0 0);
+	--accent: oklch(0.2 0 0);
+	--accent-foreground: oklch(0.95 0 0);
+	--destructive: oklch(0.5 0.25 25);
+	--destructive-foreground: oklch(0.98 0 0);
+	--border: oklch(0.2 0 0);
+	--input: oklch(0.2 0 0);
+	--ring: oklch(0.45 0.22 265);
+	--chart-1: oklch(0.45 0.22 265);
+	--chart-2: oklch(0.6 0.2 220);
+	--chart-3: oklch(0.7 0.2 180);
+	--chart-4: oklch(0.8 0.2 140);
+	--chart-5: oklch(0.9 0.2 100);
+	--sidebar: oklch(0.05 0 0);
+	--sidebar-foreground: oklch(0.9 0 0);
+	--sidebar-primary: oklch(0.45 0.22 265);
+	--sidebar-primary-foreground: oklch(0.98 0 0);
+	--sidebar-accent: oklch(0.11 0 0);
+	--sidebar-accent-foreground: oklch(0.95 0 0);
+	--sidebar-border: oklch(0.15 0 0);
+	--sidebar-ring: oklch(0.45 0.22 265);
+	--font-sans: "Inter", sans-serif;
+	--font-serif: "Merriweather", serif;
+	--font-mono: "Geist Mono", monospace;
+	--radius: 0.5rem;
+	--radius-sm: 0.25rem;
+	--radius-md: 0.5rem;
+	--radius-lg: 1rem;
+	--radius-xl: 2rem;
+	--shadow-2xs: 0 1px 2px 0px hsl(0 0% 0% / 0.05);
+	--shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.1);
+	--shadow-sm: 0 2px 8px 0px hsl(0 0% 0% / 0.1);
+	--shadow: 0 4px 12px 0px hsl(0 0% 0% / 0.1);
+	--shadow-md: 0 6px 16px 0px hsl(0 0% 0% / 0.1);
+	--shadow-lg: 0 8px 24px 0px hsl(0 0% 0% / 0.1);
+	--shadow-xl: 0 12px 32px 0px hsl(0 0% 0% / 0.1);
+	--shadow-2xl: 0 20px 48px 0px hsl(0 0% 0% / 0.1);
+	--spacing: 0.25rem;
 }
 
-/* bebas-neue-latin-400-normal */
-@font-face {
-	font-family: "Bebas Neue";
-	font-style: normal;
-	font-display: swap;
-	font-weight: 400;
-	src: url("./assets/BebasNeue-Regular.ttf") format("truetype");
-	unicode-range:
-		U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+body {
+	background-color: var(--background);
+	color: var(--foreground);
+	font-family: var(--font-sans);
+	overflow-x: hidden;
 }
 
-button {
-	border: 1px solid transparent;
-	margin-bottom: 1rem;
-	padding: 0.6em 1.2em;
-	font-size: 2em;
-	font-weight: 500;
-	font-family: "Bebas Neue", sans-serif;
-	background-color: var(--color-blue-200);
-	cursor: pointer;
-	transition: border-color 0.25s;
+.sidebar {
+	background-color: var(--sidebar);
+	border-right: 1px solid var(--sidebar-border);
+	animation: sidebarLoad 400ms ease-out 100ms both;
 }
 
-button:hover {
-	border-color: #646cff;
+.main-content {
+	animation: pageLoad 500ms ease-out both;
 }
 
-button:focus,
-button:focus-visible {
-	outline: 4px auto -webkit-focus-ring-color;
+.nav-link {
+	transition: background-color 200ms ease-out;
 }
 
-div {
-	font-family: "Bebas Neue", sans-serif;
+.nav-link.active,
+.nav-link:hover {
+	background-color: var(--sidebar-accent);
+	color: var(--sidebar-accent-foreground);
 }
 
-form {
-	margin: 1rem;
+.btn {
+	transition:
+		transform 150ms ease-in-out,
+		background-color 200ms ease-out,
+		box-shadow 200ms ease-out;
 }
 
-legend {
-	text-decoration-line: underline;
+.btn:hover {
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+	transform: translateY(-1px) scale(0.98);
+}
+
+.btn-primary {
+	background-color: var(--primary);
+	color: var(--primary-foreground);
+}
+
+.btn-destructive {
+	background-color: var(--destructive);
+	color: var(--destructive-foreground);
+}
+
+.card {
+	background-color: var(--card);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+}
+
+.table-row {
+	border-bottom: 1px solid var(--border);
+	animation: tableRowLoad 400ms ease-out both;
+}
+
+.table-row:hover {
+	background-color: var(--accent);
+}
+
+.status-indicator-active {
+	animation: statusIndicatorPulse 2000ms infinite ease-in-out;
+}
+
+.modal-overlay {
+	background-color: rgba(0, 0, 0, 0.7);
+	animation: fadeIn 300ms ease-out both;
+}
+
+.modal-content {
+	animation: modalOpen 300ms ease-out both;
+}
+
+@keyframes pageLoad {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes sidebarLoad {
+	from {
+		opacity: 0;
+		transform: translateX(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes modalOpen {
+	from {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes statusIndicatorPulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.7;
+	}
+}
+
+@keyframes tableRowLoad {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }

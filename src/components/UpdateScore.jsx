@@ -5,7 +5,7 @@ import { getDeck } from "../../utils/localStorage.js";
 // deck of players stored in localStorage
 export const UpdateScore = ({ setDeck }) => {
 	const [name, setName] = useState("");
-	const [score, setScore] = useState("");
+	const [_score, setScore] = useState("");
 	//const [curr_name, setCurrName] = useState("");
 	const { handleInputChange } = useProps();
 
@@ -16,7 +16,7 @@ export const UpdateScore = ({ setDeck }) => {
 		// this should probably be a class
 		const constructPlayer = () => {
 			const quarterback = {
-				id: "p" + Date.now(),
+				id: `p${Date.now()}`,
 				name: name,
 				store_location: st,
 				games: [],
