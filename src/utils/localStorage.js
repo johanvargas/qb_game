@@ -7,7 +7,8 @@ export const getDeck = () => {
 		if (value[0] !== "{") {
 			continue;
 		}
-		array.push(value);
+		console.log("getDeckvalue: ", value);
+		array.push(JSON.parse(value));
 	}
 	return array;
 };

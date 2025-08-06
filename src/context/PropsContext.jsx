@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useState, useEffect } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import { gameInitialState } from "../constants/gameInitialState.js";
 
 // Context for shared state

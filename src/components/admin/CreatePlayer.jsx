@@ -1,120 +1,54 @@
-import { useState } from "react";
+import { useSnapshot } from "valtio";
 import { useProps } from "../../hooks/useProps.jsx";
-import { getDeck } from "../../utils/localStorage.js";
+import { store } from "../../stores/admin.store.js";
 
-export const CreatePlayer = ({ onStateChange }) => {
-	const [name, setName] = useState("");
-	const [store_location, setStoreLocation] = useState("");
-	const [curr_name, setCurrName] = useState("");
+export default function SelectExistingPlayer() {
 	const { handleInputChange } = useProps();
-
-	// Handle Create Player //
-	function handleSubmitCreate(e) {
-		e.preventDefault();
-
-		// this should probably be a class
-		const constructPlayer = () => {
-			const quarterback = {
-				id: "p" + Date.now(),
-				name: name,
-				store_location: st,
-				games: [],
-				high_score: 0,
-				current_score: 0,
-			};
-			return quarterback;
-		};
-
-		const name = e.target.name.value;
-		const st = e.target.store_location.value;
-
-		localStorage.setItem(name, JSON.stringify(constructPlayer()));
-		localStorage.setItem("current_player", name);
-
-		// props.setPlayer(prev => prev.concat({name, species, age, id: Date.now()}))
-		handleInputChange("player", name);
-		onStateChange(getDeck());
-
-		// cleanup input fields
-		setName("")
-		setStoreLocation("")
-	}
+	const { deck } = useSnapshot(store);
 
 	// Handle Select Existing Player to Play
-	function handleSubmitSelectPlayer(e) {
+	function handleSubmitPick(e) {
 		e.preventDefault();
 		localStorage.setItem("current_player", e.target.curr_name.value);
 		handleInputChange("player", e.target.curr_name.value);
-
-		// cleanup input fields
-		setName("")
 	}
 
 	return (
 		<div className="my-2">
-			<div className="bg-white my-2">
-				<div className="p-4 text-3xl">
-					Current Player Ready
-					<span className="bg-green-400 ml-180 text-6xl p-2 m-2 rounded-sm">
-						{localStorage.getItem("current_player")}
-					</span>
-				</div>
-			</div>
-			<div className="grid grid-cols-2">
-				<div className="p-5 text-3xl bg-emerald-300">
-					<form onSubmit={handleSubmitCreate}>
-						<fieldset>
-							<legend>Add New Player</legend>
-							<label htmlFor="name">Name</label>
-							<input
-								type="text"
-								className="bg-gray-200 px-1 m-2"
-								value={name}
-								name="name"
-								onChange={(e) => setName(e.target.value)}
-								placeholder="enter name"
-							/>
-							<br />
-							<label htmlFor="store_location">Store Location</label>
-							<input
-								type="text"
-								className="bg-gray-200"
-								value={store_location}
-								name="store_location"
-								onChange={(e) => setStoreLocation(e.target.value)}
-								placeholder="enter location"
-							/>
-							<br />
-							<button type="submit" className="hover:bg-gray-300">
-								Add Player
-							</button>
-						</fieldset>
-					</form>
-				</div>
-				<div className="bg-green-300 p-5 text-3xl">
-					<form onSubmit={handleSubmitSelectPlayer}>
-						<fieldset>
-							<legend className="text-gray-900">
-								Select Existing Player
-							</legend>
-							<label htmlFor="curr_name">Name</label>
-							<br />
-							<input
-								className="bg-gray-100"
-								value={curr_name}
-								name="curr_name"
-								onChange={(e) => setCurrName(e.target.value)}
-								placeholder="enter name"
-							/>
-							<br />
-							<br />
-							<button type="submit" className="content-center hover:bg-gray-300">
+			<div className="card p-6">
+				<form onSubmit={handleSubmitPick}>
+					<fieldset>
+						<label
+							htmlFor="curr_name"
+							className="block text-sm font-medium text-[var(--muted-foreground)] mb-1"
+						>
+							Select Existing Player
+						</label>
+						<select
+							name="curr_name"
+							className="bg-[var(--input)] border border-[var(--border)] text-white w-full p-2 rounded-md"
+						>
+							{deck.map((item) => (
+								<option
+									className="text-gray-900"
+									key={item.id}
+									value={item.name}
+								>
+									{item.name}
+								</option>
+							))}
+						</select>
+						<div className="pt-4">
+							<button
+								type="submit"
+								className="btn btn-primary px-4 py-2 rounded-lg"
+							>
 								Select Player
 							</button>
-						</fieldset>
-					</form>
-				</div>
+						</div>
+					</fieldset>
+				</form>
 			</div>
 		</div>
 	);
-};
+}

@@ -86,15 +86,15 @@ function ledControl() {
 	setInterval(() => sendCommand("X003B[240005]"), 1000);
 }
 
-if (process.argv[2] == "check") {
+if (process.argv[2] === "check") {
 	checkNexmo();
 }
-if (process.argv[2] == "updatezones") {
+if (process.argv[2] === "updatezones") {
 	setupBoard();
 }
-if (process.argv[2] == "setupfoi") {
+if (process.argv[2] === "setupfoi") {
 	setupFoi();
 }
-if (process.argv[2] == "led") {
+if (process.argv[2] === "led") {
 	ledControl();
 }

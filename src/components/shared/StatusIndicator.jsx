@@ -1,13 +1,19 @@
-export const StatusIndicator = ({ playing }) => {
+export const StatusIndicator = ({ isActive }) => {
 	return (
-		<div
-			className={
-				playing
-					? "w-80 m-auto p-2 pt-4 bg-green-300 text-green-700 font-bold text-7xl text-center rounded-full"
-					: "w-80 m-auto p-2 pt-4 text-center bg-red-400 text-red-700 font-bold font-sans text-7xl rounded-full"
-			}
-		>
-			{playing ? "Hike" : "Timeout"}
+		<div className="flex items-center gap-2">
+			<span className="relative flex h-3 w-3">
+				<span
+					className={`animate-ping absolute inline-flex h-full w-full rounded-full ${isActive ? "bg-green-400" : "bg-red-400"} opacity-75`}
+				></span>
+				<span
+					className={`relative inline-flex rounded-full h-3 w-3 ${isActive ? "bg-green-500" : "bg-red-500"}`}
+				></span>
+			</span>
+			<p
+				className={`text-3xl font-bold ${isActive ? "text-green-400" : "text-red-400"} status-indicator-active`}
+			>
+				{isActive ? "Active" : "Stopped"}
+			</p>
 		</div>
 	);
 };

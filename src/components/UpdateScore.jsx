@@ -5,7 +5,7 @@ import { getDeck } from "../../utils/localStorage.js";
 // deck of players stored in localStorage
 export const UpdateScore = ({ setDeck }) => {
 	const [name, setName] = useState("");
-	const [score, setScore] = useState("");
+	const [_score, setScore] = useState("");
 	//const [curr_name, setCurrName] = useState("");
 	const { handleInputChange } = useProps();
 
@@ -16,7 +16,7 @@ export const UpdateScore = ({ setDeck }) => {
 		// this should probably be a class
 		const constructPlayer = () => {
 			const quarterback = {
-				id: "p" + Date.now(),
+				id: `p${Date.now()}`,
 				name: name,
 				store_location: st,
 				games: [],
@@ -89,9 +89,7 @@ export const UpdateScore = ({ setDeck }) => {
 				<div className="bg-green-300 p-5 text-3xl">
 					<form onSubmit={handleSubmitPick}>
 						<fieldset>
-							<legend className="text-gray-900">
-								Select Existing Player
-							</legend>
+							<legend className="text-gray-900">Select Existing Player</legend>
 							<label htmlFor="curr_name">Name</label>
 							<br />
 							<input
@@ -103,7 +101,10 @@ export const UpdateScore = ({ setDeck }) => {
 							/>
 							<br />
 							<br />
-							<button type="submit" className="content-center hover:bg-gray-300">
+							<button
+								type="submit"
+								className="content-center hover:bg-gray-300"
+							>
 								Select Player
 							</button>
 						</fieldset>

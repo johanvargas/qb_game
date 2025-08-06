@@ -1,43 +1,53 @@
-import { useState } from "react";
-import { getDeck } from "../../utils/localStorage.js";
+import { useSnapshot } from "valtio";
+import { store } from "../../stores/admin.store.js";
 
-export const DeletePlayer = ( { deck, setDeck } ) => {
-	const [name, setName] = useState("");
+export default function DeletePlayer() {
+	const { deck } = useSnapshot(store);
 
 	function handleDeletePlayer(formData) {
 		const player = formData.get("name");
 		console.log("Delete Player: ", player);
-		console.log('deck: ', deck)
+		console.log("deck: ", deck);
 		if (localStorage.getItem(player)) {
 			localStorage.removeItem(player);
-			//setName(player);
-			setDeck(getDeck());
+			store.deck = deck.filter((item) => item.name !== player);
+			if (store.current_player === player) {
+				store.current_player = "";
+				localStorage.setItem("current_player", "");
+			}
 		}
-
-		// cleanup input fields
-		setName("")
 	}
 
 	return (
-		<div className="bg-fuchsia-300 p-5 text-3xl">
+		<div className="card p-6">
 			<form action={handleDeletePlayer}>
 				<fieldset>
-					<legend className="rounded-sm">Delete Player</legend>
-					<label htmlFor="name">Name</label>
-					<input
-						className="bg-gray-100"
-						value={name}
-						name="name"
-						onChange={(e) => setName(e.target.value)}
-						placeholder="enter name"
-					/>
-
-					<br />
-					<button type="submit" className="content-center hover:bg-gray-300">
+					<label
+						htmlFor="name"
+						className="block text-sm font-medium text-[var(--muted-foreground)] mb-1"
+					>
 						Delete Player
-					</button>
+					</label>
+					<select
+						name="name"
+						className="bg-[var(--input)] border border-[var(--border)] text-white w-full p-2 rounded-md"
+					>
+						{deck.map((item) => (
+							<option key={item.id} value={item.name}>
+								{item.name}
+							</option>
+						))}
+					</select>
+					<div className="pt-4">
+						<button
+							type="submit"
+							className="btn btn-destructive px-4 py-2 rounded-lg"
+						>
+							Delete Player
+						</button>
+					</div>
 				</fieldset>
 			</form>
 		</div>
 	);
-};
+}

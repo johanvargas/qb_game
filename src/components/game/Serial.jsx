@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
 export const Serial = () => {
 	const [serialData, setSerialData] = useState("Waiting...");
 	const [score, setScore] = useState(0);
-	const [points, setPoint] = useState([]);
-	const [time, setTime] = useState(0);
-	const [prev, setPrev] = useState("");
+	const [_points, _setPoint] = useState([]);
+	const [_time, _setTime] = useState(0);
+	const [_prev, _setPrev] = useState("");
 
 	const socket = io("http://localhost:8080");
 
@@ -18,7 +18,7 @@ export const Serial = () => {
 		localStorage.setItem("score", score);
 	}, [score, socket.on]);
 
-	const incrementScore = (points) => {
+	const _incrementScore = (points) => {
 		setScore(score + points);
 	};
 
