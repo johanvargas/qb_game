@@ -30,9 +30,20 @@ export default function Home() {
 	const [_hold, _setHold] = useState("Hold Item");
 
 	useEffect(() => {
-		const realPlayerList = realPlayers(mockQuaterbacks);
-		const playerSort = realPlayerList.toSorted(realPlayerList.current_score);
-		setRanked(playerSort);
+		const realPlayerList = realPlayers();
+	     const mockQbs = mockQuaterbacks();
+
+		  console.log('type: ', mockQbs)
+	     //const playerSort = realPlayerList.toSorted(realPlayerList.current_score)
+
+		if ( realPlayerList.length === 0 ) { 
+		     const playerSort = mockQbs.toSorted((a, b) => b.current_score - a.current_score)
+		     setRanked(playerSort.filter((item) => playerSort.indexOf(item) < 5 ))   
+		} else {
+		     //const playerSort = realPlayerList.toSorted(realPlayerList.current_score)
+		     const playerSort = realPlayersList.toSorted((a, b) => b.current_score - a.current_score)
+		     setRanked(playerSort.filter((item) => playerSort.indexOf(item) < 5 ))   
+		}
 	}, []);
 
 	const Rank = (plops) => {
@@ -40,17 +51,14 @@ export default function Home() {
 		const plugParsed = plug[0];
 
 		return (
-			<tr>
-				<td className="text-white text-2xl bg-blue-500 text-center">
+		    	<tr>
+				<td className="text-white text-3xl bg-blue-500 text-center">
 					<strong>{plops.rank + 1}</strong>
 				</td>
-				<td className="font-bold text-white text-xl bg-blue-800 text-center uppercase">
-					{plugParsed.name}
-				</td>
-				<td className="font-bold text-white text-2xl bg-blue-800 text-center uppercase">
+				<td className="font-bold text-white text-4xl bg-blue-800 text-center uppercase">
 					{plugParsed.store_location}
 				</td>
-				<td className="font-bold text-white bg-blue-500 text-center text-3xl">
+				<td className="font-bold text-white bg-blue-500 text-center text-4xl">
 					{plugParsed.current_score}
 				</td>
 			</tr>
@@ -61,18 +69,17 @@ export default function Home() {
 		<div className="m-auto w-300">
 			<div className="p-7">
 				<img
-					className="h-50 m-auto w-200"
+					className="h-50 m-auto w-5/6"
 					src={leaderboard_title}
 					alt="leaderboard"
 				/>
 			</div>
 			<table className="w-full h-125 pt-4 m-2">
 				<thead className="pt-10">
-					<tr className="bg-blue-500 text-white">
-						<th className="text-bold p-4 text-2xl">Rank</th>
-						<th className="text-bold p-4 text-2xl">Player</th>
-						<th className="text-bold p-4 text-2xl">Store Location</th>
-						<th className="text-bold p-4 text-2xl">Score</th>
+					<tr className="bg-blue-500 text-white text-3xl">
+						<th className="text-bold p-4 ">Rank</th>
+						<th className="text-bold p-4 ">Store Location</th>
+						<th className="text-bold p-4 ">Score</th>
 					</tr>
 				</thead>
 				<tbody>
