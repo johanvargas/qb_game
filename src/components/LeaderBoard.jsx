@@ -1,6 +1,6 @@
+import Home from "../Home";
 import { useProps } from "../hooks/useProps.jsx";
 import { ExitScreen } from "./game/ExitScreen.jsx";
-import Home from "../Home";
 
 export const LeaderBoard = () => {
 	const { props } = useProps();

@@ -40,7 +40,12 @@ export const GameControls = () => {
 			<div>
 				<form onSubmit={handleSubmitStop}>
 					<fieldset>
-						<input className="hidden" value={props.player} name="test_name" readOnly />
+						<input
+							className="hidden"
+							value={props.player}
+							name="test_name"
+							readOnly
+						/>
 						<button
 							type="submit"
 							className="w-full"
