@@ -7,7 +7,5 @@ export const gameInitialState = {
 	player: "No player set",
 	player_set: false,
 	playing: false,
-	closing: false,
-	intro: false,
 	deck: [],
 };

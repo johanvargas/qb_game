@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useProps } from "../../hooks/useProps.jsx";
 import { getDeck } from "../../utils/localStorage.js";
 
-export const CreatePlayer = ({ setDeck }) => {
+export const CreatePlayer = ({ onStateChange }) => {
 	const [name, setName] = useState("");
 	const [store_location, setStoreLocation] = useState("");
 	const [curr_name, setCurrName] = useState("");
@@ -33,14 +33,21 @@ export const CreatePlayer = ({ setDeck }) => {
 
 		// props.setPlayer(prev => prev.concat({name, species, age, id: Date.now()}))
 		handleInputChange("player", name);
-		setDeck(getDeck());
+		onStateChange(getDeck());
+
+		// cleanup input fields
+		setName("")
+		setStoreLocation("")
 	}
 
 	// Handle Select Existing Player to Play
-	function handleSubmitPick(e) {
+	function handleSubmitSelectPlayer(e) {
 		e.preventDefault();
 		localStorage.setItem("current_player", e.target.curr_name.value);
 		handleInputChange("player", e.target.curr_name.value);
+
+		// cleanup input fields
+		setName("")
 	}
 
 	return (
@@ -85,7 +92,7 @@ export const CreatePlayer = ({ setDeck }) => {
 					</form>
 				</div>
 				<div className="bg-green-300 p-5 text-3xl">
-					<form onSubmit={handleSubmitPick}>
+					<form onSubmit={handleSubmitSelectPlayer}>
 						<fieldset>
 							<legend className="text-gray-900">
 								Select Existing Player

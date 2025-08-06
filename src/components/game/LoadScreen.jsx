@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useProps } from "../../hooks/useProps.jsx";
+import { Header } from "../shared/Header.jsx"
 
 export const LoadScreen = () => {
 	const [isvisible, setIsVisible] = useState(true);
@@ -14,7 +15,7 @@ export const LoadScreen = () => {
 	return (
 		<>
 			{isvisible ? (
-				<LoadScreenPresentation playing={props.playing} />
+				<LoadScreenPresentation playing={props.player} />
 			) : (
 				<div className="hidden"></div>
 			)}
@@ -25,7 +26,8 @@ export const LoadScreen = () => {
 const LoadScreenPresentation = ({ playing }) => {
 	return (
 		<div className="text-3xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-auto h-screen text-center">
-			Load Screen {playing}
+	  <Header />
+			<div className="text-5xl">Now Playing: {playing}</div>
 		</div>
 	);
 };

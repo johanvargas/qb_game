@@ -13,11 +13,9 @@ export const Admin = () => {
 	const { keepscore, setKeepScore } = useState(localStorage.getItem("score"));
 	const [deck, setDeck] = useState(getDeck());
 
-	useEffect(() => {
-		const fetchData = getDeck();
-		console.log("qbs, ", fetchData);
-		setDeck(fetcdfgsdffgsdgfg\\hData);
-	}, []);
+    const handleSetDeck = (newValue) => {
+	    setDeck(newValue)
+    }
 
 	//TODO: beautify forms +1/2
 	return (
@@ -26,10 +24,10 @@ export const Admin = () => {
 			<StatusIndicator playing={props.playing} />
 			<GameControls />
 			<div>
-				<CreatePlayer setDeck={setDeck} />
+				<CreatePlayer onStateChange={handleSetDeck} />
 			</div>
 			<div>
-				<DeletePlayer setDeck={setDeck} deck={deck}/>
+				<DeletePlayer setDeck={handleSetDeck} deck={deck} props={props}/>
 			</div>
 			<div>
 				<p className="text-gray-300 text-lg p-2">
@@ -37,7 +35,7 @@ export const Admin = () => {
 				</p>
 			</div>
 			<div className="grid grid-cols-3">
-				<PlayerCards />
+				<PlayerCards deck={deck}/>
 			</div>
 		</div>
 	);

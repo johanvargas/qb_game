@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { getDeck } from "../../utils/localStorage.js";
 import star from "../../assets/Star.png";
 
-export const PlayerCards = () => {
-	const [state, setState] = useState(getDeck());
+export const PlayerCards = ({ deck }) => {
+	const [state, setState] = useState(() => getDeck());
 
 	useEffect(() => {
-		setState(getDeck());
-	}, []);
+		setState(deck)
+	}, [deck]);
 
 	const playerCard = (item) => {
 		console.log("item: ", item);

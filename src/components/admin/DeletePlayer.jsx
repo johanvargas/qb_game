@@ -10,9 +10,12 @@ export const DeletePlayer = ( { deck, setDeck } ) => {
 		console.log('deck: ', deck)
 		if (localStorage.getItem(player)) {
 			localStorage.removeItem(player);
-			setName(player);
-			setDeck(getDeck);
+			//setName(player);
+			setDeck(getDeck());
 		}
+
+		// cleanup input fields
+		setName("")
 	}
 
 	return (
