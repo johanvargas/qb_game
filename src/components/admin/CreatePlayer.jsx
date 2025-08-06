@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { useProps } from "../../hooks/useProps.jsx";
-import { getDeck } from "../../utils/localStorage.js";
+import { store } from "../../stores/admin.store.js";
+import { useSnapshot } from "valtio";
+import { CurrentPlayer } from "./CurrentPlayer.jsx";
 
-export const CreatePlayer = ({ setDeck }) => {
+export const CreatePlayer = () => {
 	const [name, setName] = useState("");
 	const [store_location, setStoreLocation] = useState("");
 	const [curr_name, setCurrName] = useState("");
 	const { handleInputChange } = useProps();
+  const { deck } = useSnapshot(store);
 
 	// Handle Create Player //
 	function handleSubmitCreate(e) {
@@ -28,12 +31,14 @@ export const CreatePlayer = ({ setDeck }) => {
 		const name = e.target.name.value;
 		const st = e.target.store_location.value;
 
-		localStorage.setItem(name, JSON.stringify(constructPlayer()));
+    const player = constructPlayer();
+		localStorage.setItem(name, JSON.stringify(player));
 		localStorage.setItem("current_player", name);
 
 		// props.setPlayer(prev => prev.concat({name, species, age, id: Date.now()}))
 		handleInputChange("player", name);
-		setDeck(getDeck());
+		store.deck.push(player);
+		store.current_player = name;
 	}
 
 	// Handle Select Existing Player to Play
@@ -45,14 +50,7 @@ export const CreatePlayer = ({ setDeck }) => {
 
 	return (
 		<div className="my-2">
-			<div className="bg-white my-2">
-				<div className="p-4 text-3xl">
-					Current Player Ready
-					<span className="bg-green-400 ml-180 text-6xl p-2 m-2 rounded-sm">
-						{localStorage.getItem("current_player")}
-					</span>
-				</div>
-			</div>
+      <CurrentPlayer />
 			<div className="grid grid-cols-2">
 				<div className="p-5 text-3xl bg-emerald-300">
 					<form onSubmit={handleSubmitCreate}>
@@ -87,21 +85,31 @@ export const CreatePlayer = ({ setDeck }) => {
 				<div className="bg-green-300 p-5 text-3xl">
 					<form onSubmit={handleSubmitPick}>
 						<fieldset>
-							<legend className="text-gray-900">
-								Select Existing Player
-							</legend>
+							<legend className="text-gray-900">Select Existing Player</legend>
 							<label htmlFor="curr_name">Name</label>
 							<br />
-							<input
+              <select name="curr_name" className="bg-gray-100 w-full">
+                {/* TODO: fix this */}
+                {deck.map((item) => {
+                  console.log("Existing playeritem: ", item.name);
+                  return (
+                    <option className="text-gray-900" key={item.id} value={item.name}>{item.name}</option>
+                  )
+                })}
+              </select>
+							{/* <input
 								className="bg-gray-100"
 								value={curr_name}
 								name="curr_name"
 								onChange={(e) => setCurrName(e.target.value)}
 								placeholder="enter name"
-							/>
+							/> */}
 							<br />
 							<br />
-							<button type="submit" className="content-center hover:bg-gray-300">
+							<button
+								type="submit"
+								className="content-center hover:bg-gray-300"
+							>
 								Select Player
 							</button>
 						</fieldset>

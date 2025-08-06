@@ -13,18 +13,14 @@ export const LoadScreen = () => {
 
 	return (
 		<>
-			{isvisible ? (
-				<LoadScreenPresentation playing={props.playing} />
-			) : (
-				<div className="hidden"></div>
-			)}
+			{isvisible && <LoadScreenPresentation playing={props.playing} />}
 		</>
 	);
 };
 
 const LoadScreenPresentation = ({ playing }) => {
 	return (
-		<div className="text-3xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-auto h-screen text-center">
+		<div className="absolute top-0 left-0 z-50 text-3xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-screen h-screen text-center">
 			Load Screen {playing}
 		</div>
 	);

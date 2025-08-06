@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { useProps } from "./hooks/useProps.jsx";
-
 // assets
 import leaderboard_title from "./assets/leaderboard_title.png";
+import { useProps } from "./hooks/useProps.jsx";
 import mockQuaterbacks from "./mockQuarterbacks.js";
 
 // collects users stored in localStorage for use in state
@@ -11,7 +10,7 @@ const realPlayers = () => {
 	for (let i = 0; i < localStorage.length; i++) {
 		const key = localStorage.key(i);
 		const value = localStorage.getItem(key);
-		if (value[0] != "{") {
+		if (value[0] !== "{") {
 			continue;
 		}
 		const j = JSON.parse(value);
@@ -21,9 +20,9 @@ const realPlayers = () => {
 	const sortedArray = sendArray.sort(
 		(a, b) => b.current_score - a.current_score,
 	);
-	const filterArray = sortedArray.filter((a) => a.current_score > 0);
+	// const filterArray = sortedArray.filter((a) => a.current_score > 0);
 
-	return filterArray;
+	return sortedArray;
 };
 
 // probably should be called HomeScreen, but I'm not changing rn

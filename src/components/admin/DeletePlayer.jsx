@@ -1,17 +1,20 @@
-import { useState } from "react";
-import { getDeck } from "../../utils/localStorage.js";
+import { useSnapshot } from "valtio";
+import { store } from "../../stores/admin.store.js";
 
-export const DeletePlayer = ( { deck, setDeck } ) => {
-	const [name, setName] = useState("");
+export const DeletePlayer = () => {
+	const { deck } = useSnapshot(store);
 
 	function handleDeletePlayer(formData) {
 		const player = formData.get("name");
 		console.log("Delete Player: ", player);
-		console.log('deck: ', deck)
+		console.log("deck: ", deck);
 		if (localStorage.getItem(player)) {
 			localStorage.removeItem(player);
-			setName(player);
-			setDeck(getDeck);
+			store.deck = deck.filter((item) => item.name !== player);
+      if (store.current_player === player) {
+        store.current_player = "";
+        localStorage.setItem("current_player", "");
+      }
 		}
 	}
 
@@ -21,13 +24,11 @@ export const DeletePlayer = ( { deck, setDeck } ) => {
 				<fieldset>
 					<legend className="rounded-sm">Delete Player</legend>
 					<label htmlFor="name">Name</label>
-					<input
-						className="bg-gray-100"
-						value={name}
-						name="name"
-						onChange={(e) => setName(e.target.value)}
-						placeholder="enter name"
-					/>
+					<select name="name" className="bg-gray-100 w-full">
+            {deck.map((item) => (
+              <option key={item.id} value={item.name}>{item.name}</option>
+            ))}
+          </select>
 
 					<br />
 					<button type="submit" className="content-center hover:bg-gray-300">
