@@ -11,11 +11,7 @@ export const LoadScreen = () => {
 		}, 3000);
 	}, []);
 
-	return (
-		<>
-			{isvisible && <LoadScreenPresentation playing={props.playing} />}
-		</>
-	);
+	return <>{isvisible && <LoadScreenPresentation playing={props.playing} />}</>;
 };
 
 const LoadScreenPresentation = ({ playing }) => {

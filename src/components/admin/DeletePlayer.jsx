@@ -11,10 +11,10 @@ export const DeletePlayer = () => {
 		if (localStorage.getItem(player)) {
 			localStorage.removeItem(player);
 			store.deck = deck.filter((item) => item.name !== player);
-      if (store.current_player === player) {
-        store.current_player = "";
-        localStorage.setItem("current_player", "");
-      }
+			if (store.current_player === player) {
+				store.current_player = "";
+				localStorage.setItem("current_player", "");
+			}
 		}
 	}
 
@@ -25,10 +25,12 @@ export const DeletePlayer = () => {
 					<legend className="rounded-sm">Delete Player</legend>
 					<label htmlFor="name">Name</label>
 					<select name="name" className="bg-gray-100 w-full">
-            {deck.map((item) => (
-              <option key={item.id} value={item.name}>{item.name}</option>
-            ))}
-          </select>
+						{deck.map((item) => (
+							<option key={item.id} value={item.name}>
+								{item.name}
+							</option>
+						))}
+					</select>
 
 					<br />
 					<button type="submit" className="content-center hover:bg-gray-300">

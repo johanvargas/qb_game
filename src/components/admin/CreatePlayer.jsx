@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { useSnapshot } from "valtio";
 import { useProps } from "../../hooks/useProps.jsx";
 import { store } from "../../stores/admin.store.js";
-import { useSnapshot } from "valtio";
 import { CurrentPlayer } from "./CurrentPlayer.jsx";
 
 export const CreatePlayer = () => {
@@ -9,7 +9,7 @@ export const CreatePlayer = () => {
 	const [store_location, setStoreLocation] = useState("");
 	const [curr_name, setCurrName] = useState("");
 	const { handleInputChange } = useProps();
-  const { deck } = useSnapshot(store);
+	const { deck } = useSnapshot(store);
 
 	// Handle Create Player //
 	function handleSubmitCreate(e) {
@@ -31,7 +31,7 @@ export const CreatePlayer = () => {
 		const name = e.target.name.value;
 		const st = e.target.store_location.value;
 
-    const player = constructPlayer();
+		const player = constructPlayer();
 		localStorage.setItem(name, JSON.stringify(player));
 		localStorage.setItem("current_player", name);
 
@@ -50,7 +50,7 @@ export const CreatePlayer = () => {
 
 	return (
 		<div className="my-2">
-      <CurrentPlayer />
+			<CurrentPlayer />
 			<div className="grid grid-cols-2">
 				<div className="p-5 text-3xl bg-emerald-300">
 					<form onSubmit={handleSubmitCreate}>
@@ -88,15 +88,21 @@ export const CreatePlayer = () => {
 							<legend className="text-gray-900">Select Existing Player</legend>
 							<label htmlFor="curr_name">Name</label>
 							<br />
-              <select name="curr_name" className="bg-gray-100 w-full">
-                {/* TODO: fix this */}
-                {deck.map((item) => {
-                  console.log("Existing playeritem: ", item.name);
-                  return (
-                    <option className="text-gray-900" key={item.id} value={item.name}>{item.name}</option>
-                  )
-                })}
-              </select>
+							<select name="curr_name" className="bg-gray-100 w-full">
+								{/* TODO: fix this */}
+								{deck.map((item) => {
+									console.log("Existing playeritem: ", item.name);
+									return (
+										<option
+											className="text-gray-900"
+											key={item.id}
+											value={item.name}
+										>
+											{item.name}
+										</option>
+									);
+								})}
+							</select>
 							{/* <input
 								className="bg-gray-100"
 								value={curr_name}

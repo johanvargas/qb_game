@@ -28,3 +28,4 @@ src/assets/*
 src/notes
 *.config.js
 .gitignore
+.superdesign
