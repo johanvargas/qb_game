@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { getDeck } from "../../utils/localStorage.js";
 
-export const DeletePlayer = ({ setDecks }) => {
+export const DeletePlayer = ( { deck, setDeck } ) => {
 	const [name, setName] = useState("");
 
 	function handleDeletePlayer(formData) {
-		console.log("Delete Player: ", formData.get("name"));
 		const player = formData.get("name");
+		console.log("Delete Player: ", player);
+		console.log('deck: ', deck)
 		if (localStorage.getItem(player)) {
-			console.log("We got a match", localStorage.getItem(player));
 			localStorage.removeItem(player);
 			setName(player);
-			setDecks(getDeck());
+			setDeck(getDeck);
 		}
 	}
 
@@ -28,6 +28,7 @@ export const DeletePlayer = ({ setDecks }) => {
 						onChange={(e) => setName(e.target.value)}
 						placeholder="enter name"
 					/>
+
 					<br />
 					<button type="submit" className="content-center hover:bg-gray-300">
 						Delete Player

@@ -33,7 +33,6 @@ export const CreatePlayer = ({ setDeck }) => {
 
 		// props.setPlayer(prev => prev.concat({name, species, age, id: Date.now()}))
 		handleInputChange("player", name);
-		console.log("deck from create player: ", deck);
 		setDeck(getDeck());
 	}
 
