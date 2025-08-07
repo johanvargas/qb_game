@@ -28,8 +28,6 @@ export default function Home() {
 			const realPlayerList = realPlayers();
 			const mockQbs = mockQuaterbacks();
 
-			console.log('type: ', mockQbs)
-
 			if ( realPlayerList.length === 0 ) { 
 				const playerSort = mockQbs.toSorted((a, b) => b.current_score - a.current_score)
 				setRanked(playerSort.filter((item) => playerSort.indexOf(item) < 5 ))   

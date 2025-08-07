@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import { Header } from "../shared/Header.jsx";
 import gradientBg from "../../assets/gradient_blue_bg.png";
+import { updateDeckPlayerScore } from "../../utils/localStorage.js";
 
 export const Serial = () => {
 	const [serialData, setSerialData] = useState("Waiting...");
@@ -16,6 +17,7 @@ export const Serial = () => {
 			incrementScore(data.point);
 		});
 		localStorage.setItem("score", score);
+		updateDeckPlayerScore(localStorage.getItem("current_player"), score);
 	}, [score, socket.on]);
 
 	const incrementScore = (points) => {
