@@ -12,8 +12,9 @@ export const PlayerCards = ({ deck }) => {
 	const playerCard = (item) => {
 		const player = JSON.parse(item);
 		return (
+			<div className="w-3/4">
 			<div
-				className="bg-gradient-to-br from-blue-600 to-blue-800 text-white rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 p-4 border border-blue-400/20 w-fit min-w-[200px] m-2"
+				className="bg-gradient-to-br from-blue-600 to-blue-800 text-white rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 p-4 border border-blue-400/20"
 				key={player.id}
 			>
 				<div className="flex items-center justify-center mb-3">
@@ -32,12 +33,13 @@ export const PlayerCards = ({ deck }) => {
 					</div>
 				</div>
 			</div>
+			</div>
 		);
 	};
 
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+		<>
 			{state.map((item) => playerCard(item))}
-		</div>
+		</>
 	);
 };

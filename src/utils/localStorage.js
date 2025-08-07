@@ -35,7 +35,7 @@ export const getDeckPlayerScore = (player) => {
 export const updateDeckPlayerScore = (name, score) => {
 	const player = localStorage.getItem(name)
 	const parsePlayer = JSON.parse(player)
-	parsePlayer.current_score = score		
+	parsePlayer.current_score = score ? score : 'No user set score'		
 	localStorage.setItem(name, JSON.stringify(parsePlayer))
 	console.log('updated score: ', parsePlayer.current_score)
 }

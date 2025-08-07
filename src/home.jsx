@@ -60,11 +60,20 @@ export default function Home() {
 	const Rank = (plops) => {
 		const plug = Object.values(plops);
 		const plugParsed = plug[0];
+		const rank = plops.rank + 1;
+
+		// Add medal icon for top 3 positions
+		const getMedalIcon = () => {
+			if (rank === 1) return "🥇";
+			if (rank === 2) return "🥈";
+			if (rank === 3) return "🥉";
+			return "";
+		};
 
 		return (
 		    	<tr className="mb-2">
-				<td className="text-white text-lg sm:text-xl md:text-2xl lg:text-3xl bg-blue-700 text-center p-2 sm:p-3 md:p-4 m-1">
-					<strong>{plops.rank + 1}</strong>
+				<td className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl bg-blue-700 text-center p-2 sm:p-3 md:p-4 m-1">
+					<strong>{getMedalIcon()}</strong>
 				</td>
 				<td className="font-bold text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl bg-blue-800 text-center uppercase p-2 sm:p-3 md:p-4 break-words m-1">
 					{plugParsed.store_location}
