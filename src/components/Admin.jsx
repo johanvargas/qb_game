@@ -5,6 +5,8 @@ import { Header } from "./shared/Header.jsx";
 import { StatusIndicator } from "./shared/StatusIndicator.jsx";
 import { GameControls } from "./admin/GameControls.jsx";
 import { CreatePlayer } from "./admin/CreatePlayer.jsx";
+import { SelectPlayer } from "./admin/SelectPlayer.jsx";
+import { CurrentPlayerStatus } from "./admin/CurrentPlayerStatus.jsx";
 import { DeletePlayer } from "./admin/DeletePlayer.jsx";
 import { PlayerCards } from "./admin/PlayerCards.jsx";
 import { UpdateScore } from "./admin/UpdateScore.jsx";
@@ -30,8 +32,12 @@ export const Admin = () => {
 	       <GameControls />
 	     </div>
 	   </div>
-	   <div>
+	   <div className="mb-2">
+		<CurrentPlayerStatus />
+	   </div>
+	   <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 mb-2">
 		<CreatePlayer onStateChange={handleSetDeck} />
+		<SelectPlayer />
 	   </div>
 		<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
 		  <DeletePlayer setDeck={handleSetDeck} deck={deck} props={props}/>

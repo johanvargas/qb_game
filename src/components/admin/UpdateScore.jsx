@@ -21,7 +21,8 @@ export const UpdateScore = ({ onStateChange }) => {
 		// leaderboard will update automatically
 		onStateChangeLeaderboard(getDeck());
 
-		// Clear the form
+		// Clear the form by resetting the input values
+		e.target.reset();
 		setName("");
 		setScore(0);
 	}
