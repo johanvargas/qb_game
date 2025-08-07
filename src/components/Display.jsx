@@ -6,6 +6,7 @@ import { LeaderBoard } from "./LeaderBoard.jsx";
 //TODO: in/out displays
 export const Display = () => {
 	const { props } = useProps();
-
+	
+	console.log(props);
 	return <div>{props.playing ? <Game /> : <LeaderBoard />}</div>;
 };
