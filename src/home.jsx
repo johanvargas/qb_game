@@ -67,12 +67,13 @@ export default function Home() {
 			if (rank === 1) return "🥇";
 			if (rank === 2) return "🥈";
 			if (rank === 3) return "🥉";
+			return rank
 			return "";
 		};
 
 		return (
 		    	<tr className="mb-2">
-				<td className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl bg-blue-700 text-center p-2 sm:p-3 md:p-4 m-1">
+				<td className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl bg-blue-700 text-center p-2 sm:p-3 md:p-4 m-1">
 					<strong>{getMedalIcon()}</strong>
 				</td>
 				<td className="font-bold text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl bg-blue-800 text-center uppercase p-2 sm:p-3 md:p-4 break-words m-1">
@@ -96,7 +97,7 @@ export default function Home() {
 			</div>
 			<div className="flex-1 flex flex-col pb-8">
 				<div className="flex-1 overflow-hidden">
-					<table className="w-full h-full shadow-lg rounded-lg">
+					<table className="w-full h-full shadow-lg rounded-lg border-2 border-white/30">
 						<thead>
 							<tr className="text-white text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4">
 								<th className="font-bold p-2 sm:p-3 md:p-4 m-1">Rank</th>
