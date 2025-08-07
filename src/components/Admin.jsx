@@ -13,8 +13,10 @@ export const Admin = () => {
 	const { props } = useProps();
 	const { keepscore, setKeepScore } = useState(localStorage.getItem("score"));
 	const [deck, setDeck] = useState(getDeck());
-
-    const handleSetDeck = (newValue) => {
+	
+	console.log(props);
+	// handleSetDeck is for child components to update the deck
+    const handleSetDeck = (newValue) => { 
 	    setDeck(newValue)
     }
 

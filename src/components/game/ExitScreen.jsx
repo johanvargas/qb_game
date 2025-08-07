@@ -25,8 +25,7 @@ export const ExitScreen = () => {
     const WelcomeScreen = () => {
 	 return (
 	   isvisible ? (
-		<div 
-		  className="absolute x-0 y-0 text-7xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-screen h-screen text-center">
+		<div className="absolute x-0 y-0 text-7xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-screen h-screen text-center">
 		<Header />
 		    Are You The Best Arm In The NFL?
 		</div> ) : ( <div className="hidden"></div>)
