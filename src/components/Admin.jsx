@@ -21,19 +21,21 @@ export const Admin = () => {
 	    setDeck(newValue)
     }
 
-    return (
+         return (
 	 <div className="m-auto p-2 max-w-7xl">
-	   <div className="flex items-center">
-	     <div className="w-1/2">
-	       <Header />
-	     </div>
-	     <div className="w-1/2 flex items-center justify-end space-x-4">
+	   <div className="mb-2">
+	     <Header />
+	   </div>
+	   <div className="flex items-center space-x-4 mb-2">
+	     <div className="flex-1">
 	       <StatusIndicator playing={props.playing} />
+	     </div>
+	     <div className="flex-1">
 	       <GameControls />
 	     </div>
-	   </div>
-	   <div className="mb-2">
-		<CurrentPlayerStatus />
+	     <div className="flex-1">
+	       <CurrentPlayerStatus />
+	     </div>
 	   </div>
 	   <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 mb-2">
 		<CreatePlayer onStateChange={handleSetDeck} />

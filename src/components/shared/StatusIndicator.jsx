@@ -1,6 +1,6 @@
 export const StatusIndicator = ({ playing }) => {
 	return (
-		<div className="relative">
+		<div className="relative w-full max-w-xs">
 			{/* Sign Unit Container */}
 			<div className="bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl p-3 shadow-2xl border-2 border-gray-600">
 				{/* Status Display */}
