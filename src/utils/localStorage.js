@@ -31,3 +31,11 @@ export const getDeckPlayerScore = (player) => {
 	}
 	return score;
 };
+
+export const updateDeckPlayerScore = (name, score) => {
+	const player = localStorage.getItem(name)
+	const parsePlayer = JSON.parse(player)
+	parsePlayer.current_score = score		
+	localStorage.setItem(name, JSON.stringify(parsePlayer))
+	console.log('updated score: ', parsePlayer.current_score)
+}

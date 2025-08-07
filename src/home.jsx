@@ -10,10 +10,10 @@ import mockQuaterbacks from "./mockQuarterbacks.js";
 const realPlayers = () => {
 	const sendArray = getDeck().map(value => JSON.parse(value));
 
-	const sortedArray = sendArray.sort(
-		(a, b) => b.current_score - a.current_score,
-	);
-	const filterArray = sortedArray.filter((a) => a.current_score > 0);
+	//const sortedArray = sendArray.sort(
+	//	(a, b) => b.current_score - a.current_score,
+	//);
+	const filterArray = sendArray.filter((a) => a.current_score > 0);
 
 	return filterArray;
 };
@@ -24,20 +24,39 @@ export default function Home() {
 	const [hold, setHold] = useState("Hold Item");
 
 	useEffect(() => {
-		const realPlayerList = realPlayers();
-	     const mockQbs = mockQuaterbacks();
+		const updateRankings = () => {
+			const realPlayerList = realPlayers();
+			const mockQbs = mockQuaterbacks();
 
-		  console.log('type: ', mockQbs)
-	     //const playerSort = realPlayerList.toSorted(realPlayerList.current_score)
+			console.log('type: ', mockQbs)
 
-		if ( realPlayerList.length === 0 ) { 
-		     const playerSort = mockQbs.toSorted((a, b) => b.current_score - a.current_score)
-		     setRanked(playerSort.filter((item) => playerSort.indexOf(item) < 5 ))   
-		} else {
-		     //const playerSort = realPlayerList.toSorted(realPlayerList.current_score)
-		     const playerSort = realPlayerList.toSorted((a, b) => b.current_score - a.current_score)
-		     setRanked(playerSort.filter((item) => playerSort.indexOf(item) < 5 ))   
-		}
+			if ( realPlayerList.length === 0 ) { 
+				const playerSort = mockQbs.toSorted((a, b) => b.current_score - a.current_score)
+				setRanked(playerSort.filter((item) => playerSort.indexOf(item) < 5 ))   
+			} else {
+				const playerSort = realPlayerList.toSorted((a, b) => b.current_score - a.current_score)
+				setRanked(playerSort.filter((item) => playerSort.indexOf(item) < 5 ))   
+			}
+		};
+
+		// Initial load
+		updateRankings();
+
+		// Set up polling to check for changes every 2 seconds
+		const interval = setInterval(updateRankings, 2000);
+
+		// Listen for storage events (when localStorage changes in other tabs/windows)
+		const handleStorageChange = (e) => {
+			if (e.key && e.key !== 'current_player') {
+				updateRankings();
+			}
+		};
+		window.addEventListener('storage', handleStorageChange);
+
+		return () => {
+			clearInterval(interval);
+			window.removeEventListener('storage', handleStorageChange);
+		};
 	}, []);
 
 	const Rank = (plops) => {

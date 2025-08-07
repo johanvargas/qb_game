@@ -14,7 +14,7 @@ export const ExitScreen = () => {
 		//console.log('exit screen props current player: ', props.player)
 		
 		const score = getDeckPlayerScore(props.player)
-		//console.log('should be a number: ', score)
+		console.log('should be a number: ', score)
 		setState(score)
 		
 		setTimeout(() => {

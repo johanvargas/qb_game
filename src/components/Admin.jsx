@@ -14,7 +14,6 @@ export const Admin = () => {
 	const { keepscore, setKeepScore } = useState(localStorage.getItem("score"));
 	const [deck, setDeck] = useState(getDeck());
 	
-	console.log(props);
 	// handleSetDeck is for child components to update the deck
     const handleSetDeck = (newValue) => { 
 	    setDeck(newValue)
@@ -22,7 +21,7 @@ export const Admin = () => {
 
     return (
 	 <div className="m-auto p-2 max-w-7xl">
-	   <div className="flex items-center mb-8">
+	   <div className="flex items-center">
 	     <div className="w-1/2">
 	       <Header />
 	     </div>
@@ -36,7 +35,7 @@ export const Admin = () => {
 	   </div>
 		<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
 		  <DeletePlayer setDeck={handleSetDeck} deck={deck} props={props}/>
-		  <UpdateScore />
+		  <UpdateScore onStateChange={handleSetDeck} />
 	   </div>
 	   <div className="mb-8">
 		<p className="text-gray-300 text-lg p-4 bg-gray-800 rounded-lg">
