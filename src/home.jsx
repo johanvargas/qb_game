@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useProps } from "./hooks/useProps.jsx";
+import { getDeck } from "./utils/localStorage.js";
 
 // assets
 import leaderboard_title from "./assets/leaderboard_title.png";
@@ -7,17 +8,7 @@ import mockQuaterbacks from "./mockQuarterbacks.js";
 
 // collects users stored in localStorage for use in state
 const realPlayers = () => {
-	const sendArray = [];
-	for (let i = 0; i < localStorage.length; i++) {
-		const key = localStorage.key(i);
-		const value = localStorage.getItem(key);
-		if (value[0] != "{") {
-			continue;
-		}
-		const j = JSON.parse(value);
-		sendArray.push(j);
-	}
-
+	const sendArray = getDeck()
 	const sortedArray = sendArray.sort(
 		(a, b) => b.current_score - a.current_score,
 	);
