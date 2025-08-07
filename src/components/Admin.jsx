@@ -31,7 +31,7 @@ export const Admin = () => {
 	       <GameControls />
 	     </div>
 	   </div>
-	   <div className="mb-2">
+	   <div>
 		<CreatePlayer onStateChange={handleSetDeck} />
 	   </div>
 		<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
