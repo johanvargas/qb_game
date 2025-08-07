@@ -52,55 +52,57 @@ export const CreatePlayer = ({ onStateChange }) => {
 
 	return (
 		<div className="my-2">
-			<div className="bg-white my-2">
+			<div className="bg-white my-2 rounded-lg shadow-md">
 				<div className="p-4 text-3xl">
 					Current Player Ready
-					<span className="bg-green-400 ml-180 text-6xl p-2 m-2 rounded-sm">
+					<span className="bg-green-400 ml-180 text-6xl p-2 m-2 rounded-lg shadow-sm">
 						{localStorage.getItem("current_player")}
 					</span>
 				</div>
 			</div>
-			<div className="grid grid-cols-2">
-				<div className="p-5 text-3xl bg-emerald-300">
-					<form onSubmit={handleSubmitCreate}>
-						<fieldset>
-							<legend>Add New Player</legend>
-							<label htmlFor="name">Name</label>
+			<div className="grid grid-cols-2 gap-4">
+				<div className="p-3 text-xl bg-blue-700 text-white rounded-lg shadow-md flex flex-col">
+					<form onSubmit={handleSubmitCreate} className="flex flex-col h-full">
+						<fieldset className="flex flex-col h-full">
+							<legend className="font-bold mb-2 text-white">Add New Player</legend>
+							<label htmlFor="name" className="block mb-1 text-white">Name</label>
 							<input
 								type="text"
-								className="bg-gray-200 px-1 m-2"
+								className="bg-gray-200 px-1 py-1 m-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
 								value={name}
 								name="name"
 								onChange={(e) => setName(e.target.value)}
 								placeholder="enter name"
 							/>
 							<br />
-							<label htmlFor="store_location">Store Location</label>
+							<label htmlFor="store_location" className="block mb-1 text-white">Store Location</label>
 							<input
 								type="text"
-								className="bg-gray-200"
+								className="bg-gray-200 px-1 py-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
 								value={store_location}
 								name="store_location"
 								onChange={(e) => setStoreLocation(e.target.value)}
 								placeholder="enter location"
 							/>
 							<br />
-							<button type="submit" className="hover:bg-gray-300">
-								Add Player
-							</button>
+							<div className="mt-auto pt-2">
+								<button type="submit" className="w-full px-2 py-1 bg-blue-600 text-blue-800 font-bold rounded-md hover:bg-blue-800 hover:text-white transform hover:scale-105 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg">
+									Add Player
+								</button>
+							</div>
 						</fieldset>
 					</form>
 				</div>
-				<div className="bg-green-300 p-5 text-3xl">
-					<form onSubmit={handleSubmitSelectPlayer}>
-						<fieldset>
-							<legend className="text-gray-900">
+				<div className="bg-blue-700 p-3 text-xl text-white rounded-lg shadow-md flex flex-col">
+					<form onSubmit={handleSubmitSelectPlayer} className="flex flex-col h-full">
+						<fieldset className="flex flex-col h-full">
+							<legend className="text-white font-bold mb-2">
 								Select Existing Player
 							</legend>
-							<label htmlFor="curr_name">Name</label>
+							<label htmlFor="curr_name" className="block mb-1 text-white">Name</label>
 							<br />
 							<input
-								className="bg-gray-100"
+								className="bg-gray-100 px-1 py-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
 								value={curr_name}
 								name="curr_name"
 								onChange={(e) => setCurrName(e.target.value)}
@@ -108,9 +110,11 @@ export const CreatePlayer = ({ onStateChange }) => {
 							/>
 							<br />
 							<br />
-							<button type="submit" className="content-center hover:bg-gray-300">
-								Select Player
-							</button>
+							<div className="mt-auto pt-2">
+								<button type="submit" className="w-full px-2 py-1 bg-blue-600 text-blue-800 font-bold rounded-md hover:bg-blue-800 hover:text-white transform hover:scale-105 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg">
+									Select Player
+								</button>
+							</div>
 						</fieldset>
 					</form>
 				</div>

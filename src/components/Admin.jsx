@@ -21,24 +21,29 @@ export const Admin = () => {
     }
 
     return (
-	 <div className="m-auto">
-	   <Header />
-	   <StatusIndicator playing={props.playing} />
-	   <GameControls />
-			
-	   <div>
+	 <div className="m-auto p-2 max-w-7xl">
+	   <div className="flex items-center mb-8">
+	     <div className="w-1/2">
+	       <Header />
+	     </div>
+	     <div className="w-1/2 flex items-center justify-end space-x-4">
+	       <StatusIndicator playing={props.playing} />
+	       <GameControls />
+	     </div>
+	   </div>
+	   <div className="mb-2">
 		<CreatePlayer onStateChange={handleSetDeck} />
 	   </div>
-		<div className="grid grid-cols-2">
+		<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
 		  <DeletePlayer setDeck={handleSetDeck} deck={deck} props={props}/>
 		  <UpdateScore />
 	   </div>
-	   <div>
-		<p className="text-gray-300 text-lg p-2">
+	   <div className="mb-8">
+		<p className="text-gray-300 text-lg p-4 bg-gray-800 rounded-lg">
 		  Number of players stored: {localStorage.length - 2}
 		</p>
 	   </div>
-	   <div className="grid grid-cols-3">
+	   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 		<PlayerCards deck={deck}/>
 	   </div>
 	 </div>

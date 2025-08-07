@@ -46,13 +46,13 @@ export default function Home() {
 
 		return (
 		    	<tr className="mb-2">
-				<td className="text-white text-lg sm:text-xl md:text-2xl lg:text-3xl bg-blue-500 text-center p-2 sm:p-3 md:p-4 m-1 rounded">
+				<td className="text-white text-lg sm:text-xl md:text-2xl lg:text-3xl bg-blue-700 text-center p-2 sm:p-3 md:p-4 m-1">
 					<strong>{plops.rank + 1}</strong>
 				</td>
-				<td className="font-bold text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl bg-blue-800 text-center uppercase p-2 sm:p-3 md:p-4 break-words m-1 rounded">
+				<td className="font-bold text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl bg-blue-800 text-center uppercase p-2 sm:p-3 md:p-4 break-words m-1">
 					{plugParsed.store_location}
 				</td>
-				<td className="font-bold text-white bg-blue-500 text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl p-2 sm:p-3 md:p-4 m-1 rounded">
+				<td className="font-bold text-white bg-blue-700 text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl p-2 sm:p-3 md:p-4 m-1">
 					{plugParsed.current_score}
 				</td>
 			</tr>
@@ -61,7 +61,7 @@ export default function Home() {
 
 	return (
 		<div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-screen flex flex-col">
-			<div className="p-4 sm:p-6 md:p-7 flex-shrink-0">
+			<div className="p-2 sm:p-3 md:p-4 flex-shrink-0">
 				<img
 					className="h-32 sm:h-40 md:h-48 lg:h-50 m-auto w-full max-w-lg object-contain"
 					src={leaderboard_title}
@@ -72,10 +72,10 @@ export default function Home() {
 				<div className="flex-1 overflow-hidden">
 					<table className="w-full h-full shadow-lg rounded-lg">
 						<thead>
-							<tr className="bg-blue-500 text-white text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4">
-								<th className="font-bold p-2 sm:p-3 md:p-4 m-1 rounded">Rank</th>
-								<th className="font-bold p-2 sm:p-3 md:p-4 m-1 rounded">Store Location</th>
-								<th className="font-bold p-2 sm:p-3 md:p-4 m-1 rounded">Score</th>
+							<tr className="text-white text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4">
+								<th className="font-bold p-2 sm:p-3 md:p-4 m-1">Rank</th>
+								<th className="font-bold p-2 sm:p-3 md:p-4 m-1">Store Location</th>
+								<th className="font-bold p-2 sm:p-3 md:p-4 m-1">Score</th>
 							</tr>
 						</thead>
 						<tbody className="h-full">
