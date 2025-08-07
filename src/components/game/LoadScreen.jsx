@@ -4,53 +4,40 @@ import { Header } from "../shared/Header.jsx"
 
 export const LoadScreen = () => {
 	const [isvisible, setIsVisible] = useState(true);
-	const [isAnimating, setIsAnimating] = useState(false);
 	const { props } = useProps();
 
 	useEffect(() => {
-		// Animate in on mount
-		setIsAnimating(true);
-		
-		setTimeout(() => {
-			// Start fade out animation
-			setIsAnimating(false);
-			setTimeout(() => {
-				setIsVisible(false);
-			}, 500); // Wait for fade out animation to complete
+		console.log('LoadScreen mounted, will hide in 3 seconds');
+		const timer = setTimeout(() => {
+			console.log('LoadScreen hiding now');
+			setIsVisible(false);
 		}, 3000);
+		
+		return () => clearTimeout(timer);
 	}, []);
 
 	return (
-		<>
-			{isvisible && (
+		<div>
+			{isvisible ? (
 				<LoadScreenPresentation 
 					playing={props.player} 
-					isAnimating={isAnimating}
 				/>
-			)}
-		</>
+			) : null}
+		</div>
 	);
 };
 
-const LoadScreenPresentation = ({ playing, isAnimating }) => {
+const LoadScreenPresentation = ({ playing }) => {
+	console.log('LoadScreenPresentation rendering with player:', playing);
 	return (
 		<div 
-			className={`text-3xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-auto h-screen text-center transition-all duration-500 ease-in-out ${
-				isAnimating 
-					? 'opacity-100 translate-y-0' 
-					: 'opacity-0 translate-y-4'
-			}`}
+			className="fixed inset-0 text-7xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-full h-full flex flex-col items-center justify-center z-50"
 		>
-			<Header />
-			<div 
-				className={`text-5xl transition-all duration-700 ease-out ${
-					isAnimating 
-						? 'opacity-100 translate-y-0' 
-						: 'opacity-0 translate-y-8'
-				}`}
-				style={{ transitionDelay: isAnimating ? '200ms' : '0ms' }}
-			>
-				Now Playing: {playing}
+			<div className="flex flex-col items-center justify-center h-full w-full">
+				<Header />
+				<div className="mt-8 text-center">
+					Now Playing: {playing || 'No Player'}
+				</div>
 			</div>
 		</div>
 	);

@@ -25,9 +25,11 @@ export const ExitScreen = () => {
     const WelcomeScreen = () => {
 	 return (
 	   isvisible ? (
-		<div className="absolute x-0 y-0 text-7xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-screen h-screen text-center">
+		<div className="absolute x-0 y-0 text-7xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-screen h-screen flex flex-col items-center justify-center">
 		<Header />
-		    Are You The Best Arm In The NFL?
+		    <div className="mt-8">
+		        Are You The Best Arm In The NFL?
+		    </div>
 		</div> ) : ( <div className="hidden"></div>)
 	 )
     }
@@ -36,9 +38,11 @@ export const ExitScreen = () => {
 	  return (
 	    isvisible ? (
 		<div 
-		  className="absolute x-0 y-0 text-7xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-screen h-screen text-center">
+		  className="absolute x-0 y-0 text-7xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-screen h-screen flex flex-col items-center justify-center">
 		<Header />
-		    YOUR SCORE: {state}
+		    <div className="mt-8">
+		        YOUR SCORE: {state}
+		    </div>
 		</div>
 	   ) : (
 		  <div className="hidden"></div>
