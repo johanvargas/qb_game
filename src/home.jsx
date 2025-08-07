@@ -8,12 +8,20 @@ import mockQuaterbacks from "./mockQuarterbacks.js";
 
 // collects users stored in localStorage for use in state
 const realPlayers = () => {
+<<<<<<< HEAD
 	const sendArray = getDeck().map(value => JSON.parse(value));
 
 	//const sortedArray = sendArray.sort(
 	//	(a, b) => b.current_score - a.current_score,
 	//);
 	const filterArray = sendArray.filter((a) => a.current_score > 0);
+=======
+	const sendArray = getDeck()
+	const sortedArray = sendArray.sort(
+		(a, b) => b.current_score - a.current_score,
+	);
+	const filterArray = sortedArray.filter((a) => a.current_score > 0);
+>>>>>>> ecfab6d11477e661a68a5ce02d994c6278bb7bf3
 
 	return filterArray;
 };
