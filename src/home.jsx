@@ -54,13 +54,13 @@ export default function Home() {
 
 		return (
 		    	<tr>
-				<td className="text-white text-3xl bg-blue-500 text-center">
+				<td className="text-white text-lg sm:text-xl md:text-2xl lg:text-3xl bg-blue-500 text-center p-2 sm:p-3">
 					<strong>{plops.rank + 1}</strong>
 				</td>
-				<td className="font-bold text-white text-4xl bg-blue-800 text-center uppercase">
+				<td className="font-bold text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl bg-blue-800 text-center uppercase p-2 sm:p-3">
 					{plugParsed.store_location}
 				</td>
-				<td className="font-bold text-white bg-blue-500 text-center text-4xl">
+				<td className="font-bold text-white bg-blue-500 text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl p-2 sm:p-3">
 					{plugParsed.current_score}
 				</td>
 			</tr>
@@ -68,35 +68,37 @@ export default function Home() {
 	};
 
 	return (
-		<div className="m-auto w-300">
-			<div className="p-7">
+		<div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div className="p-4 sm:p-6 lg:p-8">
 				<img
-					className="h-50 m-auto w-5/6"
+					className="h-auto max-h-32 sm:max-h-40 md:max-h-48 lg:max-h-56 mx-auto w-full max-w-4xl object-contain"
 					src={leaderboard_title}
 					alt="leaderboard"
 				/>
 			</div>
-			<table className="w-full h-125 pt-4 m-2">
-				<thead className="pt-10">
-					<tr className="bg-blue-500 text-white text-3xl">
-						<th className="text-bold p-4 ">Rank</th>
-						<th className="text-bold p-4 ">Store Location</th>
-						<th className="text-bold p-4 ">Score</th>
-					</tr>
-				</thead>
-				<tbody>
-					{ranked.map((player, index) => (
-						<Rank
-							key={player.id}
-							plops={ranked[index]}
-							rank={index}
-							name={player.name}
-							store_location={player.store_location}
-							current_score={player.current_score}
-						/>
-					))}
-				</tbody>
-			</table>
+			<div className="overflow-x-auto">
+				<table className="w-full min-h-96 border-collapse shadow-lg rounded-lg overflow-hidden">
+					<thead>
+						<tr className="bg-blue-500 text-white text-lg sm:text-xl md:text-2xl lg:text-3xl">
+							<th className="font-bold p-3 sm:p-4 md:p-5">Rank</th>
+							<th className="font-bold p-3 sm:p-4 md:p-5">Store Location</th>
+							<th className="font-bold p-3 sm:p-4 md:p-5">Score</th>
+						</tr>
+					</thead>
+					<tbody>
+						{ranked.map((player, index) => (
+							<Rank
+								key={player.id}
+								plops={ranked[index]}
+								rank={index}
+								name={player.name}
+								store_location={player.store_location}
+								current_score={player.current_score}
+							/>
+						))}
+					</tbody>
+				</table>
+			</div>
 		</div>
 	);
 }
