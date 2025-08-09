@@ -34,12 +34,9 @@ export const Serial = () => {
 					<Header />
 				</div>
 				<div className="text-center text-white">
-					<div className="text-6xl mb-6">
-						Last Serial Command Received: <span className="font-bold">{serialData}</span>
-					</div>
-					<div className="bg-green-500 text-center rounded-sm p-6">
+					<div className="bg-green-500 pt-10 mt-10 text-center rounded-xl p-7 w-100 h-auto">
 						<p className="text-5xl text-white">Score</p>
-						<p className="text-8xl font-bold text-white mb-4">
+						<p className="text-9xl font-bold text-white mb-4">
 							{score}
 						</p>
 					</div>

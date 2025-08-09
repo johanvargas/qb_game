@@ -22,11 +22,11 @@ export const Admin = () => {
     }
 
          return (
-	 <div className="m-auto p-2 max-w-7xl">
+	 <div className="m-auto p-2 w-7/8">
 	   <div className="mb-2">
 	     <Header />
 	   </div>
-	   <div className="flex items-center space-x-4 mb-2">
+	   <div className="flex items-center space-x-3 mb-2">
 	     <div className="flex-1">
 	       <StatusIndicator playing={props.playing} />
 	     </div>

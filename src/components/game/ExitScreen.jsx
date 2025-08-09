@@ -19,13 +19,13 @@ export const ExitScreen = () => {
 		
 		setTimeout(() => {
 			setIsVisible(false);
-		}, 3000);
+		}, 4500);
 	}, []);
     
     const WelcomeScreen = () => {
 	 return (
 	   isvisible ? (
-		<div className="absolute x-0 y-0 text-7xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-screen h-screen flex flex-col items-center justify-center">
+		<div className="absolute x-0 y-0 text-white bg-[url(./assets/gradient_blue_bg.png)] w-screen h-screen flex flex-col items-center justify-center">
 		<Header />
 		    <div className="mt-8">
 		        Are You The Best Arm In The NFL?
@@ -38,9 +38,9 @@ export const ExitScreen = () => {
 	  return (
 	    isvisible ? (
 		<div 
-		  className="absolute x-0 y-0 text-7xl text-white bg-[url(./assets/gradient_blue_bg.png)] w-screen h-screen flex flex-col items-center justify-center">
+		  className="absolute x-0 y-0 text-white text- bg-[url(./assets/gradient_blue_bg.png)] w-screen h-screen flex flex-col items-center justify-center">
 		<Header />
-		    <div className="mt-8">
+		    <div className="mt-8 text-[70px]">
 		        YOUR SCORE: {state}
 		    </div>
 		</div>

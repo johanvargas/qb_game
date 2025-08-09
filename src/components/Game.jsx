@@ -9,7 +9,7 @@ export const Game = () => {
 	const [throws_, setThrows] = useState(3);
 
 	return (
-		<div className="m-auto w-200">
+		<div className="m-auto">
 			<LoadScreen />
 			<Serial />
 		</div>
