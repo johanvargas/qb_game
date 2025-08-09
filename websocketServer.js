@@ -32,7 +32,7 @@ import { ReadlineParser } from "@serialport/parser-readline";
 // Serial Connection
 import { SerialPort } from "serialport";
 
-const serial_port = new SerialPort({ path: "COM10", baudRate: 115200 });
+const serial_port = new SerialPort({ path: "COM3", baudRate: 115200 });
 
 console.log(serial_port);
 
