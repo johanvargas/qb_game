@@ -7,7 +7,7 @@ import { updateDeckPlayerScore } from "../../utils/localStorage.js";
 export const Serial = () => {
 	const [serialData, setSerialData] = useState("Waiting...");
 	const [score, setScore] = useState(0);
-	const [points, setPoint] = useState([]);
+	const [points, setPoint] = useState(0);
 
 	const socket = io("http://localhost:8080");
 
