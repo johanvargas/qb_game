@@ -102,14 +102,14 @@ parser.on("data", (data) => {
 	}
 	if (data === "X007B[ZONE05=EXIT]") {
 		console.log("Signal Received:", data);
-		io.emit("serialdata", { data: data, time: Date.now(), point: 6 });
+		io.emit("serialdata", { data: data, time: Date.now(), point: 10 });
 
 		setTimeout(() => sendCommand("X005B[240301]"), 50);
 		setTimeout(() => sendCommand("X005B[260001]"), 500);
 	}
 	if (data === "X007B[ZONE06=EXIT]") {
 		console.log("Signal Received:", data);
-		io.emit("serialdata", { data: data, time: Date.now(), point: 6 });
+		io.emit("serialdata", { data: data, time: Date.now(), point: 10 });
 
 		setTimeout(() => sendCommand("X006B[240301]"), 50);
 		setTimeout(() => sendCommand("X006B[260001]"), 500);
