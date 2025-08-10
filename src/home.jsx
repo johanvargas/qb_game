@@ -26,15 +26,18 @@ export default function Home() {
 	useEffect(() => {
 		const updateRankings = () => {
 			const realPlayerList = realPlayers();
-			const mockQbs = mockQuaterbacks();
+			//const mockQbs = mockQuaterbacks();
 
-			if ( realPlayerList.length === 0 ) { 
-				const playerSort = mockQbs.toSorted((a, b) => b.current_score - a.current_score)
-				setRanked(playerSort.filter((item) => playerSort.indexOf(item) < 5 ))   
-			} else {
-				const playerSort = realPlayerList.toSorted((a, b) => b.current_score - a.current_score)
-				setRanked(playerSort.filter((item) => playerSort.indexOf(item) < 5 ))   
-			}
+		     const playerSort = realPlayerList.toSorted((a, b) => b.current_score - a.current_score)
+		     setRanked(playerSort.filter((item) => playerSort.indexOf(item) < 5 ))   
+			
+		    //if ( realPlayerList.length === 0 ) { 
+			//	const playerSort = mockQbs.toSorted((a, b) => b.current_score - a.current_score)
+			//	setRanked(playerSort.filter((item) => playerSort.indexOf(item) < 5 ))   
+			//} else {
+			//	const playerSort = realPlayerList.toSorted((a, b) => b.current_score - a.current_score)
+			//	setRanked(playerSort.filter((item) => playerSort.indexOf(item) < 5 ))   
+			//}
 		};
 
 		// Initial load
