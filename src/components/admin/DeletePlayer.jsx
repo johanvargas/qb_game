@@ -6,20 +6,22 @@ export const DeletePlayer = ( { deck, setDeck } ) => {
 
 	function handleDeletePlayer(formData) {
 		const player = formData.get("name");
-		console.log("Delete Player: ", player);
-		console.log('deck: ', deck)
-		if (localStorage.getItem(player)) {
+
+		if (localStorage.getItem(player) != null) {
 			localStorage.removeItem(player);
 			//setName(player);
 			setDeck(getDeck());
-		}
+      console.log("deleted player: ", player);
+    } else {
+      console.log('user doesn\'t exist: ', player)
+    }
 
 		// cleanup input fields
 		setName("")
 	}
 
 	return (
-		<div className="bg-blue-700 p-1 text-lg text-white rounded-lg shadow-md flex flex-col">
+		<div className="bg-blue-800 p-1 text-lg text-white rounded-lg shadow-md flex flex-col">
 			<form action={handleDeletePlayer} className="flex flex-col h-full">
 				<fieldset className="flex flex-col h-full">
 					<legend className="rounded-sm font-bold mb-1 text-white">Delete Player</legend>

@@ -29,7 +29,7 @@ export const PlayerCards = ({ deck }) => {
 					
 					<div className="bg-blue-500/20 rounded-lg p-2 text-center">
 						<div className="text-xs text-blue-200 uppercase tracking-wide mb-1">Current Score</div>
-						<div className="text-2xl font-bold text-yellow-300">{player.current_score}</div>
+						<div className="text-3xl font-bold text-yellow-300">{player.current_score}</div>
 					</div>
 				</div>
 			</div>

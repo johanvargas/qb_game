@@ -16,7 +16,7 @@ export const SelectPlayer = () => {
 	}
 
 	return (
-		<div className="p-1 text-lg bg-blue-700 text-white rounded-lg shadow-md flex flex-col">
+		<div className="p-1 text-lg bg-blue-800 text-white rounded-lg shadow-md flex flex-col">
 			<form onSubmit={handleSubmitSelectPlayer} className="flex flex-col h-full">
 				<fieldset className="flex flex-col h-full">
 					<legend className="text-white font-bold mb-1">
